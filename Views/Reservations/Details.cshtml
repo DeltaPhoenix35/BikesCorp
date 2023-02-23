@@ -1,0 +1,47 @@
+﻿@model BikesTest.Models.Reservation
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Reservation</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.bicycle_Id)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.bicycle_Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.customer_Id)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.customer_Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.reservationDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.reservationDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.expectedReturnDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.expectedReturnDate)
+        </dd>
+    </dl>
+</div>
+<div>
+	<a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
+    @if (User.IsInRole("Admin")) {
+	    <a asp-action="Confirm" asp-route-id="@Model.id">Confirm</a> @("|")
+    }
+
+	<a asp-action="Cancel" asp-route-id="@Model.id">Cancel</a> |
+	<a asp-action="Index">Back to List</a>
+</div>

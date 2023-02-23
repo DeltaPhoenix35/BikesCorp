@@ -1,0 +1,62 @@
+﻿@model BikesTest.Models.BicycleContract
+
+@{
+	ViewData["Title"] = "Create";
+}
+<div class="container">
+	<h1>Deny</h1>
+
+	<div>
+		<h4>BicycleContract</h4>
+		<hr />
+		<dl class="row">
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.customer)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.customer.id)
+			</dd>
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.bicycle.bicycleType)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.bicycle.bicycleType.typeName)
+			</dd>
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.moreInfo)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.moreInfo)
+			</dd>
+		</dl>
+	</div>
+
+	<div class="row">
+		<div class="col-md-4">
+			<h3>Are you sure you want to deny this contract</h3>
+
+			<form asp-action="Deny">
+				@Html.AntiForgeryToken()
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<input type="hidden" asp-for="id" />
+
+				<div class="form-group">
+					<label asp-for="refusalInformation" class="control-label"></label>
+					<textarea asp-for="refusalInformation" type="text" class="form-control"></textarea>
+					<span asp-validation-for="refusalInformation" class="text-danger"></span>
+				</div>
+
+				<div class="form-group">
+					<a asp-action="Index" asp-route-id="@User.Identities.FirstOrDefault().FindFirst("Id").Value"><input type="submit" value="Deny" class="btn btn-danger" /></a>
+				</div>
+			</form>
+			<div>
+				<a asp-action="Index" class="btn">Back to list</a>
+			</div>
+		</div>
+	</div>
+
+	@section Scripts {
+		@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	}
+</div>

@@ -1,0 +1,119 @@
+﻿@using System.Security.Claims;
+
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - BikesCo</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+			<div class="container">
+				<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BikesCo</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+						aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+					<ul class="navbar-nav flex-grow-1">
+						@if (User.IsInRole("Admin"))
+						{
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="Bicycles" asp-action="Index">Bicycles</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="BicycleTypes" asp-action="Index">Bicycle Types</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Index">Customers</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="CouponTypes" asp-action="Index">Coupons</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="Admins" asp-action="Index">Admins</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="Transactions" asp-action="Index">Transactions</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="Reservations" asp-action="Index">Reservations</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="SubscriptionPlan" asp-action="Index">Plans</a>
+							</li>
+						}
+						else if (User.Identity.IsAuthenticated)
+						{
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Details" asp-route-id="@User.Identities.First().FindFirst("Id").Value">My Profile</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="BicycleTypes" asp-action="Index">Our Bicycles</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="Reservations" asp-action="Create" asp-route-id="@User.Identities.First().FindFirst("Id").Value">Reserve a Bike</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="Reservations" asp-action="Index" asp-route-id="@User.Identities.First().FindFirst("Id").Value">My Reservations</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="Transactions" asp-action="Index" asp-route-id="@User.Identities.First().FindFirst("Id").Value">My Rentals</a>
+							</li>
+						}
+						else
+						{
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="BicycleTypes" asp-action="Index">Our Bicycles</a>
+							</li>
+						}
+						@if (User.Identity.IsAuthenticated)
+						{
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="BicycleContracts" asp-action="Index" asp-route-id="@User.Identities.First().FindFirst("Id").Value">My Contracts</a>
+							</li>
+						}
+
+
+					</ul>
+					<ul class="navbar-nav d-flex justify-content-end flex-grow-1">
+						@if (User.Identity.IsAuthenticated)
+						{
+							<li class="nav-item">
+								<a class="btn btn-danger" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+							</li>
+						}
+						else
+						{
+							<li class="nav-item">
+								<a class="btn" asp-area="" asp-controller="Home" asp-action="login">Login</a>
+							</li>
+							<li class="nav-item">
+								<a class="btn btn-primary" asp-area="" asp-controller="Customer" asp-action="Create">Register</a>
+							</li>
+						}
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<div class="container-fluid">
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
+	</div>
+
+	<footer class="border-top footer text-muted">
+		<div class="container-fluid">
+			&copy; 2021 - BikesCo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+		</div>
+	</footer>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

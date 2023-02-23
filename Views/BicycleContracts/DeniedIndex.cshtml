@@ -1,0 +1,60 @@
+﻿@model IEnumerable<BikesTest.Models.BicycleContract>
+
+@{
+	ViewData["Title"] = "DeniedIndex";
+}
+
+<h1>Denied Index</h1>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.customer)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.bicycle)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.moreInfo)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.isActive)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.isDenied)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.customer.user.username)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.bicycle.id)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.moreInfo)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.isActive)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.isDenied)
+			</td>
+			<td>
+				<a asp-action="Details" asp-route-id="@item.id">Details</a>
+			</td>
+		</tr>
+		}
+	</tbody>
+</table>
+
+<p>
+	<a asp-action="Index">Check Active Contracts</a> |
+	<a asp-action="InactiveIndex">Check Inactive Contracts</a>
+</p>

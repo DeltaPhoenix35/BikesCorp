@@ -1,0 +1,45 @@
+﻿@model BikesTest.Models.CouponType
+
+@{
+	ViewData["Title"] = "Confirm";
+	var customer = ViewBag.customer;
+	int points = customer.points - Model.pointsToRedeem;
+}
+
+<h1>Confirm</h1>
+
+<div>
+	<h4>Coupon</h4>
+	<hr />
+	<div>
+		<dl class="row">
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.value)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.value)
+			</dd>
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.weeksToExpire)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.weeksToExpire)
+			</dd>
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.pointsToRedeem)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.pointsToRedeem)
+			</dd>
+		</dl>
+	</div>
+
+	<div>
+		<a asp-controller="Coupon" asp-action="Confirm" asp-route-id="@Model.id" class="btn btn-success">Confirm</a>
+		<a asp-controller="Customer" asp-action="Redeem" asp-route-id="@customer.id">Back to List</a>
+	</div>
+
+	@section Scripts {
+		@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	}
+</div>

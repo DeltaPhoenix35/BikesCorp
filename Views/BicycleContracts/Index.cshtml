@@ -1,0 +1,50 @@
+﻿@model IEnumerable<BikesTest.Models.BicycleContract>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.customer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.bicycle.bicycleType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.moreInfo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.customer.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.bicycle.bicycleType.typeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.moreInfo)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.id">Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<p>
+	<a asp-action="InactiveIndex">Check Inactive Contracts</a> |
+	<a asp-action="DeniedIndex">Check Denied Contracts</a>
+</p>

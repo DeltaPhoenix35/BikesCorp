@@ -1,0 +1,39 @@
+﻿@model BikesTest.Models.BicycleContract
+
+@{
+	ViewData["Title"] = "Confirm";
+}
+
+<h1>Confirm</h1>
+
+<h3>Are you sure you want to Confirm ?</h3>
+<h1>Confirm</h1>
+
+<div>
+	<hr />
+	<dl class="row">
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.customer_Id)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.customer_Id)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.bicycle.bicycleType_Id)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.bicycle.bicycleType_Id)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.moreInfo)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.moreInfo)
+		</dd>
+	</dl>
+
+	<form asp-action="Confirm">
+		<input type="hidden" asp-for="id" />
+		<input type="submit" value="Confirm" class="btn btn-success" />
+	</form>
+</div>

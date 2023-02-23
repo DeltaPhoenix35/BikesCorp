@@ -1,0 +1,98 @@
+﻿@model BikesTest.Models.Transaction
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="container">
+	<h1>Details</h1>
+
+	<div>
+		<h4>Transaction</h4>
+		<hr />
+		<div class="modal-body row">
+			<div class="col-md-6">
+				<dl>
+					<dt class="col-md-4">
+						@Html.DisplayNameFor(model => model.rentalDate)
+					</dt>
+					<dd class="col-md-12">
+						@Html.DisplayFor(model => model.rentalDate)
+					</dd>
+					<dt class="col-md-4">
+						@Html.DisplayNameFor(model => model.expectedReturnDate)
+					</dt>
+					<dd class="col-md-12">
+						@Html.DisplayFor(model => model.expectedReturnDate)
+					</dd>
+					<dt class="col-md-4">
+						@Html.DisplayNameFor(model => model.returnDate)
+					</dt>
+					<dd class="col-md-12">
+						@Html.DisplayFor(model => model.returnDate)
+					</dd>
+					<dt class="col-md-4">
+						@Html.DisplayNameFor(model => model.durationOfTransaction)
+					</dt>
+					<dd class="col-md-12">
+						@Html.DisplayFor(model => model.durationOfTransaction)
+					</dd>
+					<dt class="col-md-4">
+						@Html.DisplayNameFor(model => model.customer.user.username)
+					</dt>
+					<dd class="col-md-12">
+						<a asp-action="Details" asp-controller="Customer" asp-route-id="@Model.customer.id">@Html.DisplayFor(model => model.customer.user.username)</a>
+					</dd>
+					<dt class="col-md-4">
+						@Html.DisplayNameFor(model => model.bicycle_Id)
+					</dt>
+					<dd class="col-md-12">
+						<a asp-action="Details" asp-controller="Bicycles" asp-route-id="@Model.bicycle.id">@Html.DisplayFor(model => model.bicycle.id)</a>
+					</dd>
+					<dt class="col-md-4">
+						@Html.DisplayNameFor(model => model.admin.user.username)
+					</dt>
+					<dd class="col-md-12">
+						<a asp-action="Details" asp-controller="Admins" asp-route-id="@Model.admin.id">@Html.DisplayFor(model => model.admin.user.username)</a>
+					</dd>
+					<dt class="col-md-4">
+						@Html.DisplayNameFor(model => model.costOfTransaction)
+					</dt>
+					<dd class="col-md-12">
+						@Html.DisplayFor(model => model.costOfTransaction)
+					</dd>
+				</dl>
+			</div>
+
+			<div class="col-md-6">
+				<table class="table">
+					@if (Model.locations != null)
+					{
+						foreach (var item in Model.locations)
+						{
+							<tr class="col-md-12">
+								<th>
+									@Html.DisplayFor(modelItem => item.timestamp)
+								</th>
+							</tr>
+
+							<tr class="col-md-12">
+								<td class="col-md-6">
+									@Html.DisplayFor(modelItem => item.geoPoint.Latitude)
+								</td>
+								<td class="col-md-6">
+									@Html.DisplayFor(modelItem => item.geoPoint.Longitude)
+								</td>
+							</tr>
+
+						}
+					}
+
+				</table>
+				</div>
+		</div>
+		
+	</div>
+	<div>
+		<a asp-action="Index">Back to List</a>
+	</div>
+</div>

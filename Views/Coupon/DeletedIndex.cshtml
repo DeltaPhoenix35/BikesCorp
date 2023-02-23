@@ -1,0 +1,68 @@
+﻿@model IEnumerable<BikesTest.Models.Coupon>
+
+@{
+    ViewData["Title"] = "Deleted Index";
+    var currentId = Int32.Parse(User.Identities.FirstOrDefault().FindFirst("Id").Value);
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.couponType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.expiringDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.customer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.transaction_Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isUsed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isExpired)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isDeleted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.couponType.value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.expiringDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.customer.user.username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.transaction_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isUsed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isExpired)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isDeleted)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<a asp-action="Index" asp-route-id="@currentId">View Coupons</a>
+<a asp-action="UsedIndex" asp-route-id="@currentId">View Used Coupons</a>
+<a asp-action="ExpiredIndex" asp-route-id="@currentId">View Expired Coupons</a>

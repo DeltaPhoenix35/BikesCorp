@@ -1,0 +1,86 @@
+﻿@model BikesTest.Models.BicycleType
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<div class="container">
+	<h1>Edit</h1>
+
+	<h4>BicycleType</h4>
+	<hr />
+	<div class="row">
+		<div class="col-md-4">
+			<form asp-action="Edit">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<input type="hidden" asp-for="id" />
+				<div class="form-group">
+					<label asp-for="typeName" class="control-label"></label>
+					<input asp-for="typeName" class="form-control" />
+					<span asp-validation-for="typeName" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="description" class="control-label"></label>
+					<input asp-for="description" class="form-control" />
+					<span asp-validation-for="description" class="text-danger"></span>
+				</div>
+
+				<input asp-for="pricingScheme_Id" hidden />
+
+				<label class="control-label">Pricing scheme</label>
+				<div style="display:flex; flex-direction:row; column-gap:20px;">
+
+					<div class="form-group">
+						<label asp-for="pricing.perHour" class="control-label"></label>
+						<input asp-for="pricing.perHour" type="number" min="0" class="form-control" />
+						<span asp-validation-for="pricing.perHour" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="pricing.per1Day" class="control-label"></label>
+						<input asp-for="pricing.per1Day" type="number" min="0" class="form-control" />
+						<span asp-validation-for="pricing.per1Day" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="pricing.per2Days" class="control-label"></label>
+						<input asp-for="pricing.per2Days" type="number" min="0" class="form-control" />
+						<span asp-validation-for="pricing.per2Days" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="pricing.per3Days" class="control-label"></label>
+						<input asp-for="pricing.per3Days" type="number" min="0" class="form-control" />
+						<span asp-validation-for="pricing.per3Days" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="pricing.per4Days" class="control-label"></label>
+						<input asp-for="pricing.per4Days" type="number" min="0" class="form-control" />
+						<span asp-validation-for="pricing.per4Days" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="pricing.per5Days" class="control-label"></label>
+						<input asp-for="pricing.per5Days" type="number" min="0" class="form-control" />
+						<span asp-validation-for="pricing.per5Days" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="pricing.perExtraDay" class="control-label"></label>
+						<input asp-for="pricing.perExtraDay" type="number" min="0" class="form-control" />
+						<span asp-validation-for="pricing.perExtraDay" class="text-danger"></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="reduction" class="control-label"></label>
+					<input asp-for="reduction" type="number" min="0" class="form-control" />
+					<span asp-validation-for="reduction" class="text-danger"></span>
+				</div>
+
+				<div class="form-group">
+					<input type="submit" value="Save" class="btn btn-primary" />
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div>
+		<a asp-action="Index">Back to List</a>
+	</div>
+
+</div>

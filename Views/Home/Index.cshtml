@@ -1,0 +1,109 @@
+﻿@{
+	ViewData["Title"] = "Home Page";
+	var NotSameUser = TempData["NotSameUser"] as string;
+	var AdminSuspendedError = TempData["AdminSuspendedError"] as string;
+}
+
+@if (!string.IsNullOrEmpty(NotSameUser))
+{
+	<span class="alert-danger">@NotSameUser</span>
+}
+@if (!string.IsNullOrEmpty(AdminSuspendedError))
+{
+	<span class="alert-danger">@AdminSuspendedError</span>
+}
+
+<div class="top-image-home">
+
+	<h1 class="ride-together-title">
+		RIDE TOGETHER
+	</h1>
+
+
+	<div class="container box-container">
+
+		<div class="text-box">
+
+			<img src="/images/interrogatoire.png" alt="" class="box-icon" />
+			<p class="box-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+		</div>
+
+		<div class="text-box">
+			<img src="images/interrogatoire.png" alt="" class="box-icon" />
+			<p class="box-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+		</div>
+
+		<div class="text-box">
+			<img src="/images/interrogatoire.png" alt="" class="box-icon" />
+			<p class="box-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+		</div>
+	</div>
+</div>
+
+<div class="container" style="position:relative; margin-top:10px; width:100%;
+                              display:flex">
+
+	<img src="/images/bikes_2.jpg" alt="" style=" width:35%; height:100%;" />
+
+	<div class="text-container">
+		<h2 class="text-title">ABOUT US</h2>
+		<p>
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+			<br>
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+		</p>
+		<h2 class="text-title">OUR SERVICES</h2>
+		<p>
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+			<br>
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+		</p>
+	</div>
+</div>
+
+<div style="position:relative; text-align:center; padding-top:30px;">
+	<a asp-area="" asp-controller="Customer" asp-action="Create" style="text-decoration:none;">
+		<h1 class="joinus-title">
+			JOIN US
+		</h1>
+	</a>
+</div>
+
+<div class="container" style="position:relative; margin-top:10px; width:100%;
+                              display:flex; flex-direction:column;">
+	<h2 class="text-title">WANT TO MAKE PROFIT ?</h2>
+	<p>
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+		<br>
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+	</p>
+	
+</div>
+<div style="position:relative; text-align:center; padding:30px 0px 30px 0px;">
+	<h1 class="joinus-title">
+		WHAT ARE YOU WAITING FOR
+		<a asp-area="" asp-controller="BicycleContracts" asp-action="Create" style="text-decoration:none;">
+			SEND YOUR BIKE FOR APPROVAL
+		</a>
+	</h1>
+</div>
+
+
+	<div class="joinus-image">
+		<h1 style="font-style: italic; font-size: 30px;
+	   text-align: center; padding-top: 80px;">
+			<q>Some review by a fellow customer</q>
+		</h1>
+
+	</div>
+
+
+
+

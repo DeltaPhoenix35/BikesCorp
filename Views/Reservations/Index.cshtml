@@ -1,0 +1,52 @@
+﻿@model IEnumerable<BikesTest.Models.Reservation>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.bicycle_Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.customer_Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.reservationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.expectedReturnDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.bicycle_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.customer_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.reservationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.expectedReturnDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.id">Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

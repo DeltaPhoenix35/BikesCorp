@@ -1,0 +1,102 @@
+﻿@model BikesTest.Models.Reservation
+
+@{
+	ViewData["Title"] = "Create";
+	Customer customer = null;
+	if (ViewBag.customer != null) {
+		customer = ViewBag.customer;
+	}
+	var currentUserId = User.Identities.FirstOrDefault().FindFirst("Id").Value;
+}
+
+<h1>Create</h1>
+
+<h4>Reservation</h4>
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		@if (User.IsInRole("Customer") && customer != null)
+		{
+			<h3>Reservation for @customer.user.username</h3>
+		}
+
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<input hidden readonly asp-for="bicycle_Id" value="1" />
+				<label asp-for="bicycleType_Id" class="control-label"></label>
+				@if (ViewBag.bicycleTypes != null)
+				{
+					<select asp-for="bicycleType_Id" class="form-control">
+						@foreach (var element in ViewBag.bicycleTypes)
+						{
+							<option value="@element.Key">@element.Value</option>
+						}
+					</select>
+				}
+				else
+				{
+					<input asp-for="bicycleType_Id" type="number" min="1" class="form-control" />
+				}
+				<span asp-validation-for="bicycleType_Id" class="text-danger"></span>
+			</div>
+			@if (!User.IsInRole("Customer"))
+			{
+				<div class="form-group">
+					<label asp-for="customer_Id" class="control-label"></label>
+					<input asp-for="customer_Id" class="form-control" />
+					<span asp-validation-for="customer_Id" class="text-danger"></span>
+				</div>
+			}
+			else if (customer != null)
+			{
+				<input asp-for="customer_Id" value="@customer.id" type="hidden" class="form-control" />
+			}
+
+			<div class="form-group">
+				<label asp-for="reservationDate" class="control-label"></label>
+				<input asp-for="reservationDate" class="form-control" />
+				<span asp-validation-for="reservationDate" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="expectedReturnDate" class="control-label"></label>
+				<input asp-for="expectedReturnDate" class="form-control" />
+				<span asp-validation-for="expectedReturnDate" class="text-danger"></span>
+			</div>
+
+			@if (customer != null && customer.user != null)
+			{
+				<div class="form-group">
+					<label asp-for="coupon_Id" class="control-label"></label>
+
+					<select asp-for="coupon_Id" class="form-control">
+						<option value="0">Select coupon</option>
+						@if (customer.coupons != null)
+						{
+							@foreach (var coupon in customer.coupons)
+							{
+								<option value="@coupon.id">@coupon.couponType.value%   @coupon.expiringDate</option>
+							}
+						}
+						else
+						{
+							<option>No coupons</option>
+						}
+					</select>
+
+					<span asp-validation-for="coupon_Id" class="text-danger"></span>
+				</div>
+			}
+
+			<div class="form-group">
+				<input type="submit" value="Create" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
