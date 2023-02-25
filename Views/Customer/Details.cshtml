@@ -74,7 +74,7 @@
 		{
 			<a asp-controller="Home" asp-action="Index">Back to Home</a> <content>|</content>
 			<a asp-action="RedeemCoupon" asp-route-id="@Model.id">Redeem Coupon</a> <content>|</content>
-			<a asp-controller="Subscription" asp-action="Index" asp-route-id="@Model.id">My subscriptions</a> <content>|</content>
+			<a asp-controller="Subscription" asp-action="CustomerIndex" asp-route-id="@Model.id">My subscriptions</a> <content>|</content>
 			<a asp-controller="Coupon" asp-action="Index" asp-route-id="@Model.id">My Coupons</a>
 		}
 		else

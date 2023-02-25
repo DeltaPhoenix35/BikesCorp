@@ -24,7 +24,7 @@
 				<div style="display:flex; flex-direction:row;">
 					<div style="display: flex; flex-direction: row;" class="form-group">
 						<label asp-for="subscriptionDays[i].day" class="control-label">@Enum.GetName(typeof(DayOfWeek), i)</label>
-						<input asp-for="subscriptionDaysBool[i]" type="checkbox"  class="form-control" />
+						<input asp-for="subscriptionDaysBool[i]" type="checkbox" class="form-control" />
 						<span asp-validation-for="subscriptionDays[i].day" class="text-danger"></span>
 					</div>
 
@@ -47,6 +47,13 @@
 				<input asp-for="price" class="form-control" />
 				<span asp-validation-for="price" class="text-danger"></span>
 			</div>
+
+			<div class="form-group">
+				<label asp-for="isPremium" class="control-label"></label>
+				<input asp-for="isPremium" class="form-control" />
+				<span asp-validation-for="isPremium" class="text-danger"></span>
+			</div>
+
 			<div class="form-group">
 				<input type="submit" value="Create" class="btn btn-primary" />
 			</div>

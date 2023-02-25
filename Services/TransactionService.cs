@@ -45,7 +45,7 @@ namespace BikesTest.Services
                 row.customer_Id = customer.id;
                 row.admin_Id = admin.id;
                 row.bicycle_Id = bicycle.id;
-                row.bicycleType = _btService.GetById(row.bicycleType_Id);
+                bicycle.bicycleType = _btService.GetById(row.bicycleType_Id);
 
                 if (row.coupon_Id == 0 || row.coupon_Id == null)
                     row.coupon_Id = null;
@@ -78,7 +78,8 @@ namespace BikesTest.Services
                 this.SetTransactionDuration(lastTransaction);
 
                 _bService.IncrementTimesRented(bicycle);
-                _bService.IncreaseEarningsToDate(bicycle, (double)lastTransaction.costOfTransaction);
+                if(lastTransaction.costOfTransaction != null)
+                    _bService.IncreaseEarningsToDate(bicycle, (double)lastTransaction.costOfTransaction);
                 _cService.IncreaseTimeBiked(customer, (decimal)lastTransaction.durationOfTransaction);
                 _cService.IncrementBikesRented(customer);
 

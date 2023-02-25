@@ -9,8 +9,10 @@ namespace BikesTest.Interfaces
     {
         //public T Buy(int id, int customerId);
 
-        public List<T> GetAll(bool isActive);
+        public List<T> GetAll(bool isActive, bool isDeleted);
 
-        public List<T> GetByCustomerId(int id, bool isActive);
+        public List<T> GetByCustomerId(int id, bool isActive, bool isDeleted);
+
+        public T Renew(T row);
     }
 }

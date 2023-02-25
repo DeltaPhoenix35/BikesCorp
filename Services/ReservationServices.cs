@@ -38,13 +38,12 @@ namespace BikesTest.Services
         {
             List<Reservation> reservations = _db.Reservations.AsNoTracking()
                                                              .Where(o => o.isDeleted == false && o.reservationDate.AddHours(hourDelay)  /* delay = 2h */ < DateTime.Now)
-                                                             .Include(o => o.customer).ThenInclude(m => m.user)
-                                                             .Include(o => o.bicycle).ToList();
-            if(reservations != null)
+                                                             .ToList();
+            if(reservations.Count != 0)
             {
                 foreach(var res in reservations)
                 {
-                    if(res.subscription_Id == null ||res.subscription_Id == 0 || res.expectedReturnDate < DateTime.Now)
+                    if(res.subscription_Id == null || res.subscription_Id == 0 || res.expectedReturnDate < DateTime.Now)
                     {
                         res.isDeleted = true;
                         _bService.UpdateIsReserved(res.bicycle);
@@ -63,7 +62,6 @@ namespace BikesTest.Services
 
         public void CancelReservation(Reservation row)
         {
-            VerifyExpiration(2);
             //do canceling stuff
 
             Coupon coupon = _coService.GetById(row.coupon_Id);
@@ -78,7 +76,6 @@ namespace BikesTest.Services
             //mark the reservation as deleted but keep it for logs
             row.isDeleted = true;
             _bService.UpdateIsReserved(row.bicycle);
-
             
             _db.Update(row);
             _db.SaveChanges();
@@ -86,7 +83,7 @@ namespace BikesTest.Services
 
         public void ConfirmReservation(Reservation row, int currentAdminId)
         {
-            VerifyExpiration(2);
+
             _aService.CheckSuspended(currentAdminId);
             row.customer = null;
 

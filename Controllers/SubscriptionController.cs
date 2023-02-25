@@ -1,4 +1,5 @@
-﻿using BikesTest.Interfaces;
+﻿using BikesTest.Exceptions;
+using BikesTest.Interfaces;
 using BikesTest.Models;
 using BikesTest.ServiceExtentions;
 using Microsoft.AspNetCore.Authorization;
@@ -32,17 +33,17 @@ namespace BikesTest.Controllers
 
         public ActionResult Index()
         {
-            return View(_sService.GetAll(true));
+            return View(_sService.GetAll(true, false));
         }
 
         public ActionResult InactiveIndex()
         {
-            return View(_sService.GetAll(false));
+            return View(_sService.GetAll(false, true));
         }
 
         public ActionResult CustomerIndex(int id)
         {
-            return View(_sService.GetByCustomerId(id, true));
+            return View(_sService.GetByCustomerId(id, true, false));
         }
 
        
@@ -72,9 +73,62 @@ namespace BikesTest.Controllers
                 _sService.Create(row);
                 return RedirectToAction(nameof(Index));
             }
-            catch(Exception e)
+            catch (SubscriptionPlanDoesntExistException e)
             {
-                return View();
+                ViewBag.usernames = _cService.GetUsernamesAndIds();
+                ViewBag.bicycleTypes = _btService.GetIdName();
+                ViewBag.subscriptionPlans = _spService.GetIdName();
+
+                ModelState.AddModelError(nameof(row.subscriptionPlan_Id), e.Message);
+
+                return View(row);
+            }
+            catch (SubscriptionPlanIsntActive e)
+            {
+                ViewBag.usernames = _cService.GetUsernamesAndIds();
+                ViewBag.bicycleTypes = _btService.GetIdName();
+                ViewBag.subscriptionPlans = _spService.GetIdName();
+
+                ModelState.AddModelError(nameof(row.subscriptionPlan_Id), e.Message);
+
+                return View(row);
+            }
+            catch (SubscriptionPlanIsDeleted e)
+            {
+                ViewBag.usernames = _cService.GetUsernamesAndIds();
+                ViewBag.bicycleTypes = _btService.GetIdName();
+                ViewBag.subscriptionPlans = _spService.GetIdName();
+
+                ModelState.AddModelError(nameof(row.subscriptionPlan_Id), e.Message);
+
+                return View(row);
+            }
+            catch(CustomerDoesntExistException e)
+            {
+                ViewBag.usernames = _cService.GetUsernamesAndIds();
+                ViewBag.bicycleTypes = _btService.GetIdName();
+                ViewBag.subscriptionPlans = _spService.GetIdName();
+
+                ModelState.AddModelError(nameof(row.customer_Id), e.Message);
+
+                return View(row);
+            }
+            catch (CurrentlyBikingException e)
+            {
+                ViewBag.usernames = _cService.GetUsernamesAndIds();
+                ViewBag.bicycleTypes = _btService.GetIdName();
+                ViewBag.subscriptionPlans = _spService.GetIdName();
+
+                ModelState.AddModelError(nameof(row.customer_Id), e.Message);
+
+                return View(row);
+            }
+            catch (Exception e)
+            {
+                ViewBag.usernames = _cService.GetUsernamesAndIds();
+                ViewBag.bicycleTypes = _btService.GetIdName();
+                ViewBag.subscriptionPlans = _spService.GetIdName();
+                return View(row);
             }
         }
 
@@ -92,6 +146,7 @@ namespace BikesTest.Controllers
         {
             try
             {
+                _sService.Renew(_sService.GetById(id));
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -101,22 +156,31 @@ namespace BikesTest.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Customer")]
         public ActionResult Delete(int id)
         {
-            return View();
+            Subscription row = _sService.GetById(id);
+            if (User.IsInRole("Customer"))
+            {
+                Customer connectedCustomer = _cService.GetByUserId(Int32.Parse(User.Identities.FirstOrDefault().FindFirst("Id").Value));
+                if (connectedCustomer.id != row.customer_Id)
+                    return RedirectToAction(nameof(CustomerIndex), connectedCustomer.id);
+            }
+            
+            return View(row);
         }
 
-        // POST: SubscriptionController/Delete/5
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, Subscription row)
         {
             try
             {
+                _sService.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception e)
             {
                 return View();
             }

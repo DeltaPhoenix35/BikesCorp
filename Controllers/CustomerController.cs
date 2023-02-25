@@ -42,8 +42,9 @@ namespace BikesTest.Controllers
             }
             try
             {
-                this.IsIdAndConnectedCustomerMatch(id);
-                return View(_cService.GetByUserId(id));
+                var customer = _cService.GetByUserId(id);
+                this.IsIdAndConnectedCustomerMatch(customer.user.id);
+                return View(customer);
             }
             catch(LoggedIdMissmatchException)
             {
@@ -133,8 +134,9 @@ namespace BikesTest.Controllers
 
             try
             {
-                this.IsIdAndConnectedCustomerMatch(id);
-                return View(_cService.GetById(id));
+                var customer = _cService.GetById(id);
+                this.IsIdAndConnectedCustomerMatch(customer.user.id);
+                return View(customer);
             }
             catch (LoggedIdMissmatchException)
             {
@@ -178,7 +180,7 @@ namespace BikesTest.Controllers
             Customer customer = _cService.GetById(id, false, false);
             try
             {
-                this.IsIdAndConnectedCustomerMatch(id);
+                this.IsIdAndConnectedCustomerMatch(customer.user.id);
                 ViewBag.customer = customer;
                 var a = _cotService.GetAll(false);
 
@@ -218,8 +220,9 @@ namespace BikesTest.Controllers
 
             try
             {
-                this.IsIdAndConnectedCustomerMatch(id);
-                return View(_cService.GetById(id));
+                var customer = _cService.GetById(id);
+                this.IsIdAndConnectedCustomerMatch(customer.user.id);
+                return View(customer);
             }
             catch (LoggedIdMissmatchException)
             {

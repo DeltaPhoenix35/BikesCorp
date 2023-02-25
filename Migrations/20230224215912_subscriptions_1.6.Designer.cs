@@ -4,14 +4,16 @@ using BikesTest.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BikesTest.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20230224215912_subscriptions_1.6")]
+    partial class subscriptions_16
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,7 +102,7 @@ namespace BikesTest.Migrations
                         new
                         {
                             id = 1,
-                            aquisutionDate = new DateTime(2023, 2, 25, 0, 0, 0, 0, DateTimeKind.Local),
+                            aquisutionDate = new DateTime(2023, 2, 24, 0, 0, 0, 0, DateTimeKind.Local),
                             bicycleType_Id = 1,
                             earningsToDate = 0.0,
                             isConfirmed = true,
@@ -113,7 +115,7 @@ namespace BikesTest.Migrations
                         new
                         {
                             id = 2,
-                            aquisutionDate = new DateTime(2023, 2, 25, 0, 0, 0, 0, DateTimeKind.Local),
+                            aquisutionDate = new DateTime(2023, 2, 24, 0, 0, 0, 0, DateTimeKind.Local),
                             bicycleType_Id = 1,
                             earningsToDate = 0.0,
                             isConfirmed = true,
@@ -500,9 +502,6 @@ namespace BikesTest.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("isPremium")
                         .HasColumnType("bit");
 
                     b.Property<string>("name")

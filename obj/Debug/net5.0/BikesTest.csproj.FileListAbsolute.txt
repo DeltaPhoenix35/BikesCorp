@@ -434,3 +434,6 @@ D:\prog projects\ASP.NET MVC\BikesTest\BikesTest\obj\Debug\net5.0\Razor\Views\Su
 D:\prog projects\ASP.NET MVC\BikesTest\BikesTest\obj\Debug\net5.0\Razor\Views\Subscription\InactiveIndex.cshtml.g.cs
 D:\prog projects\ASP.NET MVC\BikesTest\BikesTest\obj\Debug\net5.0\Razor\Views\Subscription\Create.cshtml.g.cs
 D:\prog projects\ASP.NET MVC\BikesTest\BikesTest\obj\Debug\net5.0\Razor\Views\SubscriptionPlan\CustomerIndex.cshtml.g.cs
+D:\prog projects\ASP.NET MVC\BikesTest\BikesTest\obj\Debug\net5.0\Razor\Views\Subscription\Delete.cshtml.g.cs
+D:\prog projects\ASP.NET MVC\BikesTest\BikesTest\obj\Debug\net5.0\Razor\Views\Subscription\Renew.cshtml.g.cs
+D:\prog projects\ASP.NET MVC\BikesTest\BikesTest\obj\Debug\net5.0\Razor\Views\Subscription\CustomerIndex.cshtml.g.cs

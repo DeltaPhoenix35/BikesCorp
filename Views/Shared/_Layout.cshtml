@@ -42,9 +42,6 @@
 							<li class="nav-item">
 								<a class="nav-link text-dark" asp-area="" asp-controller="Reservations" asp-action="Index">Reservations</a>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-controller="SubscriptionPlan" asp-action="Index">Plans</a>
-							</li>
 						}
 						else if (User.Identity.IsAuthenticated)
 						{
@@ -74,6 +71,9 @@
 						{
 							<li class="nav-item">
 								<a class="nav-link text-dark" asp-area="" asp-controller="BicycleContracts" asp-action="Index" asp-route-id="@User.Identities.First().FindFirst("Id").Value">My Contracts</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="SubscriptionPlan" asp-action="Index">Plans</a>
 							</li>
 						}
 
