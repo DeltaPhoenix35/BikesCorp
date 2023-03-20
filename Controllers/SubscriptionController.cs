@@ -30,30 +30,32 @@ namespace BikesTest.Controllers
             _btService = btService;
         }
 
-
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult Index()
         {
             return View(_sService.GetAll(true, false));
         }
 
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult InactiveIndex()
         {
             return View(_sService.GetAll(false, true));
         }
 
+        [Authorize(Roles = "SuperAdmin,Customer,Admin")]
         public ActionResult CustomerIndex(int id)
         {
             return View(_sService.GetByCustomerId(id, true, false));
         }
 
-       
+        [Authorize(Roles = "SuperAdmin,Customer,Admin")]
         public ActionResult Details(int id)
         {
             return View(_sService.GetById(id));
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult Create()
         {
             ViewBag.usernames = _cService.GetUsernamesAndIds();
@@ -133,7 +135,7 @@ namespace BikesTest.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Customers))]
         public ActionResult Renew(int id)
         {
             return View(_sService.GetById(id));
@@ -156,7 +158,7 @@ namespace BikesTest.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin, Customer")]
+        [Authorize(Roles = "SuperAdmin,Customer")]
         public ActionResult Delete(int id)
         {
             Subscription row = _sService.GetById(id);

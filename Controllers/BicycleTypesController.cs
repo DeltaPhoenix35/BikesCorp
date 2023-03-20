@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using BikesTest.Services;
 using BikesTest.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using BikesTest.ServiceExtentions;
 
 namespace BikesTest.Controllers
 {
@@ -15,10 +16,13 @@ namespace BikesTest.Controllers
     {
 
         private readonly IBicycleTypeService<BicycleType> _btService;
+        private readonly IAdminService<Admin> _aService;
 
-        public BicycleTypesController(IBicycleTypeService<BicycleType> btService)
+        public BicycleTypesController(IBicycleTypeService<BicycleType> btService,
+                                      IAdminService<Admin> aService)
         {
             _btService = btService;
+            _aService = aService;
         }
 
         public ActionResult Index()
@@ -35,7 +39,7 @@ namespace BikesTest.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Bicycles))]
         public ActionResult Create()
         {
             return View();
@@ -48,6 +52,13 @@ namespace BikesTest.Controllers
         {
             try
             {
+                if (User.IsInRole(nameof(AdminRoles.Roles.Bicycles)))
+                {
+                    int currentUserId = Int32.Parse(User.Identities
+                                                   .FirstOrDefault().FindFirst("Id").Value);
+
+                    _aService.CheckSuspended(currentUserId);
+                }
                 _btService.Create(row);
                 return RedirectToAction(nameof(Index));
             }
@@ -58,10 +69,16 @@ namespace BikesTest.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Bicycles))]
         public ActionResult Edit(int id)
         {
-            
+            if (User.IsInRole(nameof(AdminRoles.Roles.Bicycles)))
+            {
+                int currentUserId = Int32.Parse(User.Identities
+                                               .FirstOrDefault().FindFirst("Id").Value);
+
+                _aService.CheckSuspended(currentUserId);
+            }
             return View(_btService.GetById(id));
         }
 
@@ -82,9 +99,16 @@ namespace BikesTest.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Bicycles))]
         public ActionResult Delete(int id)
         {
+            if (User.IsInRole(nameof(AdminRoles.Roles.Bicycles)))
+            {
+                int currentUserId = Int32.Parse(User.Identities
+                                               .FirstOrDefault().FindFirst("Id").Value);
+
+                _aService.CheckSuspended(currentUserId);
+            }
             return View(_btService.GetById(id));
         }
 

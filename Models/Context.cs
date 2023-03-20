@@ -15,7 +15,9 @@ namespace BikesTest.Models
 
         }
         public DbSet<User> Users { set; get; }
+        public DbSet<SuperAdmin> SuperAdmins { get; set; }
         public DbSet<Admin> Admins { get; set; }
+        public DbSet<AdminRoles> AdminRoles { get; set; }
         public DbSet<Bicycle> Bicycles { get; set; }
         public DbSet<BicycleType> bicycleTypes { get; set; }
         public DbSet<BicycleContract> BicycleContracts { get; set; }
@@ -42,8 +44,9 @@ namespace BikesTest.Models
             modelBuilder.ApplyConfiguration(new TransactionConfiguration());
             modelBuilder.ApplyConfiguration(new ReservationConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new SuperAdminConfiguration());
+            modelBuilder.ApplyConfiguration(new AdminRolesConfiguration());
             modelBuilder.ApplyConfiguration(new AdminConfiguration());
-            modelBuilder.ApplyConfiguration(new LocationConfiguration()); 
         }
     }
 }

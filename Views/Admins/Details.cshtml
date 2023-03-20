@@ -52,6 +52,16 @@
 			<dd class="col-sm-10">
 				@Html.DisplayFor(model => model.isSuspended)
 			</dd>
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.roles)
+			</dt>
+			@foreach (var role in Model.roles)
+			{
+				<dd class="col-sm-10">
+					@role.role
+				</dd>
+			}
+			
 		</dl>
 	</div>
 	<div>

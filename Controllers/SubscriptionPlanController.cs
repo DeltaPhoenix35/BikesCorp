@@ -14,11 +14,11 @@ namespace BikesTest.Controllers
     public class SubscriptionPlanController : Controller
     {
         private readonly ISubscriptionPlanService<SubscriptionPlan> _sService;
-        private readonly IUserService<Admin> _aService;
+        private readonly IAdminService<Admin> _aService;
         private readonly IUserService<Customer> _cService;
 
         public SubscriptionPlanController(ISubscriptionPlanService<SubscriptionPlan> sService,
-                                      IUserService<Admin> aService,
+                                      IAdminService<Admin> aService,
                                       IUserService<Customer> cService)
         {
             _sService = sService;
@@ -46,7 +46,7 @@ namespace BikesTest.Controllers
             return View(_sService.GetById(id));
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult Create()
         {
             return View();
@@ -68,7 +68,7 @@ namespace BikesTest.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult Activate(int id)
         {
             try
@@ -81,7 +81,7 @@ namespace BikesTest.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult Disable(int id)
         {
             try
@@ -96,7 +96,7 @@ namespace BikesTest.Controllers
         }
 
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult Delete(int id)
         {
             return View(_sService.GetById(id));

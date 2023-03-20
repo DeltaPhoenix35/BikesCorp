@@ -10,24 +10,11 @@ namespace BikesTest.Models
     [FirestoreData]
     public class Location 
     {
-        [FirestoreProperty]
         public long Id { get; set; }
 
-        [FirestoreProperty]
-        public GeoPoint geoPoint { get; set; }
-        
-        [FirestoreProperty]
-        public DateTime timestamp { get; set; }
+        public string location { get; set; }
 
-        public Location()
-        {
-        }
+        public DateTime dateTime { get; set; }
 
-        public Location(string _transaction_id, GeoPoint _geoPoint, DateTime _timestamp)
-        {
-            Id = Int32.Parse(_transaction_id);
-            geoPoint = _geoPoint;
-            timestamp = _timestamp;
-        }
     }
 }

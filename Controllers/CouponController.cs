@@ -23,31 +23,35 @@ namespace BikesTest.Controllers
             _cotService = cotService;
         }
 
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Customers) +",Customer")]
         public ActionResult Index(int id)
         {
             List<Coupon> coupons = _coService.GetByCustomerId(id, false, false, false, false);
             return View(coupons);
         }
 
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Customers) + ",Customer")]
         public ActionResult DeletedIndex(int id)
         {
             List<Coupon> coupons = _coService.GetByUserId(id, true, false, false, false);
             return View(coupons);
         }
 
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Customers) + ",Customer")]
         public ActionResult UsedIndex(int id)
         {
             List<Coupon> coupons = _coService.GetByCustomerId(id, false, true, false, false);
             return View(coupons);
         }
 
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Customers) + ",Customer")]
         public ActionResult ExpiredIndex(int id)
         {
             List<Coupon> coupons = _coService.GetByCustomerId(id, false, false, true, false);
             return View(coupons);
         }
 
-
+        [Authorize(Roles = "Customer")]
         public ActionResult RedeemCoupon(int id)
         {
             Customer customer = _cService.GetByUserId(Int32.Parse(User.Identities.FirstOrDefault().FindFirst("Id").Value));
@@ -72,7 +76,7 @@ namespace BikesTest.Controllers
             }
         }
 
-
+        [Authorize(Roles = "Customer")]
         public ActionResult Confirm(int id)
         {
             Customer customer = _cService.GetByUserId(Int32.Parse(User.Identities.FirstOrDefault().FindFirst("Id").Value));

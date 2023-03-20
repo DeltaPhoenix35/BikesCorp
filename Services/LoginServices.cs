@@ -44,7 +44,8 @@ namespace BikesTest.Service
 
             User currentUser = _db.Users.AsNoTracking()
                                         .Where(a => a.username == user.username)
-                                        .Include(a => a.admin)
+                                        .Include(a => a.superAdmin)
+                                        .Include(a => a.admin).ThenInclude(o => o.roles)
                                         .Include(a => a.customer)
                                         .SingleOrDefault();
 
@@ -53,7 +54,7 @@ namespace BikesTest.Service
                 throw new CustomerDoesntExistException("User doesn't exist in database");
             }
 
-            if (currentUser.admin == null && currentUser.customer == null)
+            if (currentUser.admin == null && currentUser.customer == null && currentUser.superAdmin == null)
             {
                 throw new InvalidUsernameException("Username Invalid");
             }
@@ -73,11 +74,18 @@ namespace BikesTest.Service
             var claims = new List<Claim>();
             claims.Add(new Claim("Id", (currentUser.id).ToString()));
 
+            if(currentUser.superAdmin != null)
+                claims.Add(new Claim(ClaimTypes.Role, "SuperAdmin"));
+            
 
-            if (currentUser.admin != null)
+            else if (currentUser.admin != null)
             {
                 claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+                foreach(var role in currentUser.admin.roles)
+                    claims.Add(new Claim(ClaimTypes.Role, role.role.ToString()));
+
                 currentUser.admin.isCurrentlyLogged = true;
+                currentUser.admin.roles = null;
                 _db.Update(currentUser);
                 _db.SaveChanges();
             }

@@ -1,6 +1,11 @@
 ﻿using BikesTest.Interfaces;
 using BikesTest.Models;
+using FireSharp.Config;
+using FireSharp.Interfaces;
+using FireSharp.Response;
 using Google.Cloud.Firestore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,41 +15,53 @@ namespace BikesTest.Services
 {
     public class LocationService : ILocationService
     {
-        FirestoreDb db = FirestoreDb.Create("maps2018-415d9");
-
-        public async Task<List<Location>> GetAll(int transactionId, int bicycleId)
+        private readonly IFirebaseConfig config = new FirebaseConfig
         {
-            var collection = await db.Collection("locations").Document(bicycleId.ToString()).Collection(transactionId.ToString()).OrderBy("recordTime").GetSnapshotAsync();
-            List<Location> locations = new List<Location>();
+            AuthSecret = "iCprAJzqdlLz0mou7g8j6D2eOJFzU041F0dfbdI5",
+            BasePath = "https://maps2018-415d9-default-rtdb.europe-west1.firebasedatabase.app"
+        };
+        private IFirebaseClient db;
 
-            foreach (DocumentSnapshot documentSnapshot in collection.Documents)
+
+        public List<Location> GetAll(int transactionId, int bicycleId)
+        {
+            db = new FireSharp.FirebaseClient(config);
+
+            FirebaseResponse response = db.Get(bicycleId + "/" + transactionId);
+
+            dynamic collection = JsonConvert.DeserializeObject<dynamic>(response.Body);
+
+            var list = new List<Location>();
+            if (collection != null)
             {
-                if (documentSnapshot.Exists)
+                foreach (var item in collection)
                 {
-                    Dictionary<string, object> obj = documentSnapshot.ToDictionary();
-
-                    Location loc = new Location();
-
-                    loc.Id = (long)obj["transaction_id"];
-                    loc.timestamp = ((Timestamp)obj["recordTime"]).ToDateTime();
-                    loc.geoPoint = (GeoPoint)obj["location"];
-
-                    locations.Add(loc);
+                    list.Add(JsonConvert.DeserializeObject<Location>(((JProperty)item).Value.ToString()));
                 }
             }
 
-            return locations;
+            return list;
         }
 
-        public async Task<long> GetLastTransactionId(int bicycleId)
+        public Location SetActive(int bicycleId)
         {
-            var document = await db.Collection("locations").Document(bicycleId.ToString()).Collection("0").Document("lastTransactionId").GetSnapshotAsync();
-            if (document.Exists)
-            {
-                var obj = document.ToDictionary();
-                return (long)obj["lastTransaction"];
-            }
-            return 0;
+            db = new FireSharp.FirebaseClient(config);
+            SetResponse response = db.Set(bicycleId + "/active", "1");
+            return new Location();
+        }
+
+        public Location UpdateLastTransactionId(int bicycleId, int transactionId)
+        {
+            db = new FireSharp.FirebaseClient(config);
+            SetResponse response = db.Set(bicycleId + "/lastTransaction", transactionId.ToString());
+            return new Location();
+        }
+
+        public Location ResetActive(int bicycleId)
+        {
+            db = new FireSharp.FirebaseClient(config);
+            SetResponse response = db.Set(bicycleId + "/active", "0");
+            return new Location();
         }
     }
 }

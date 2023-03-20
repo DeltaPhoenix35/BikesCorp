@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\prog projects\\ASP.NET MVC\\BikesTest\\BikesTest\\BikesTest.csproj": {}
+    "D:\\prog projects\\ASP.NET MVC\\BikesTest\\BikesCo\\BikesTest.csproj": {}
   },
   "projects": {
-    "D:\\prog projects\\ASP.NET MVC\\BikesTest\\BikesTest\\BikesTest.csproj": {
+    "D:\\prog projects\\ASP.NET MVC\\BikesTest\\BikesCo\\BikesTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\prog projects\\ASP.NET MVC\\BikesTest\\BikesTest\\BikesTest.csproj",
+        "projectUniqueName": "D:\\prog projects\\ASP.NET MVC\\BikesTest\\BikesCo\\BikesTest.csproj",
         "projectName": "BikesTest",
-        "projectPath": "D:\\prog projects\\ASP.NET MVC\\BikesTest\\BikesTest\\BikesTest.csproj",
+        "projectPath": "D:\\prog projects\\ASP.NET MVC\\BikesTest\\BikesCo\\BikesTest.csproj",
         "packagesPath": "C:\\Users\\Delta\\.nuget\\packages\\",
-        "outputPath": "D:\\prog projects\\ASP.NET MVC\\BikesTest\\BikesTest\\obj\\",
+        "outputPath": "D:\\prog projects\\ASP.NET MVC\\BikesTest\\BikesCo\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\software\\vss_sdk\\NuGetPackages",
@@ -46,6 +46,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "FireSharp": {
+              "target": "Package",
+              "version": "[2.0.4, )"
+            },
             "Google.Cloud.Firestore": {
               "target": "Package",
               "version": "[2.3.0, )"

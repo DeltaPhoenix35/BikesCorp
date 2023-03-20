@@ -10,7 +10,7 @@ namespace BikesTest.Interfaces
     {
         //T BuildTransaction(T row);
 
-        Task<T> GetByIdAsync(int? id);
+        T GetByIdIncLocations(int? id);
 
         List<T> GetAllDeleted();
 

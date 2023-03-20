@@ -17,13 +17,13 @@ namespace BikesTest.Controllers
     {
         private readonly ITransactionService<Transaction> _tService;
         private readonly IReservationService<Reservation> _rService;
-        private readonly IUserService<Admin> _aService;
+        private readonly IAdminService<Admin> _aService;
         private readonly IUserService<Customer> _cService;
         private readonly IBicycleService<Bicycle> _bService;
         private readonly IBicycleTypeService<BicycleType> _btService;
         public TransactionsController(ITransactionService<Transaction> tService,
                                       IReservationService<Reservation> rService,
-                                      IUserService<Admin> aService,
+                                      IAdminService<Admin> aService,
                                       IUserService<Customer> cService,
                                       IBicycleService<Bicycle> bService,
                                       IBicycleTypeService<BicycleType> btService)
@@ -36,10 +36,11 @@ namespace BikesTest.Controllers
             _btService = btService;
         }
 
-        [Authorize(Roles = "Admin,Customer")]
+        [HttpGet]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Transactions) + ",Customer")]
         public ActionResult Index()
         {
-            if (User.IsInRole("Admin"))
+            if (User.IsInRole(nameof(AdminRoles.Roles.Transactions)) || User.IsInRole("SuperAdmin"))
                 return View(_tService.GetAll());
             else
                 return View(_tService.GetAllByCustomerId(Int32.Parse(User.
@@ -48,33 +49,56 @@ namespace BikesTest.Controllers
                                                                     FindFirst("Id").
                                                                     Value)));
         }
-        [Authorize(Roles = "Admin")]
+
+        [HttpGet]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Transactions))]
         public ActionResult DeletedIndex()
         {
             return View(_tService.GetAllDeleted());
         }
 
-        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Transactions))]
         public ActionResult DeletedDetails(int id)
         {
             return View(_tService.GetByDeletedId(id));
         }
 
-        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Transactions) + ",Customer")]
         public ActionResult Details(int id)
         {
-            //var s = _tService.GetByIdAsync(id).Result;
-            return View(_tService.GetById(id));
+            try
+            {
+                var transaction = _tService.GetByIdIncLocations(id);
+                if (User.IsInRole("Customer"))
+                {
+                    //verify if customer is same as transaction customer
+                }
+
+                return View(transaction);
+            }
+            catch(Exception e)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+           
         }
 
-        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Transactions))]
         public ActionResult Edit(int id)
         {
             try
             {
                 _rService.VerifyExpiration(2);
-                int currentAdminId = Int32.Parse(User.Identities.FirstOrDefault().FindFirst("Id").Value);
-                _aService.CheckSuspended(currentAdminId);
+
+                if (User.IsInRole(nameof(AdminRoles.Roles.Transactions)))
+                {
+                    int currentAdminId = Int32.Parse(User.Identities.FirstOrDefault().FindFirst("Id").Value);
+                    _aService.CheckSuspended(currentAdminId);
+                }
+
                 ViewBag.bicycleTypes = _btService.GetIdName();
                 return View(_tService.GetById(id));
             }
@@ -146,7 +170,7 @@ namespace BikesTest.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Transactions))]
         public ActionResult GetTransaction()
         {
             return View(); 
@@ -192,7 +216,7 @@ namespace BikesTest.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.StoreTerminal))]
         [HttpGet]
         public ActionResult MockLogin()
         {
@@ -234,7 +258,7 @@ namespace BikesTest.Controllers
         }
 
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Transactions))]
         [HttpGet]
         public ActionResult Create(int id)
         {
@@ -245,10 +269,13 @@ namespace BikesTest.Controllers
                     customer = _cService.GetById(id, true, true);
 
                 _rService.VerifyExpiration(2);
-                int currentAdminId = Int32.Parse(User.Identities.FirstOrDefault().FindFirst("Id").Value);
-                _aService.CheckSuspended(currentAdminId);
 
-                //ViewBag.bicycles = _bService.GetAllAvailable();
+                if (User.IsInRole(nameof(AdminRoles.Roles.Transactions)))
+                {
+                    int currentAdminId = Int32.Parse(User.Identities.FirstOrDefault().FindFirst("Id").Value);
+                    _aService.CheckSuspended(currentAdminId);
+                }
+               
                 ViewBag.usernames = _cService.GetUsernamesAndIds();
                 ViewBag.bicycleTypes = _btService.GetIdName();
                 ViewBag.customer = customer;
@@ -293,7 +320,7 @@ namespace BikesTest.Controllers
                 ViewBag.bicycleTypes = _btService.GetIdName();
                 ViewBag.usernames = _cService.GetUsernamesAndIds();
                 ViewBag.customer = _cService.GetById(transaction.customer_Id);
-                ModelState.AddModelError("bicycle_Id", e.Message);
+                ModelState.AddModelError("bicycleType_Id", e.Message);
                 return View(transaction);
             }
             catch (AdminDoesntExistException e)
@@ -327,6 +354,22 @@ namespace BikesTest.Controllers
                 ViewBag.usernames = _cService.GetUsernamesAndIds();
                 ViewBag.customer = _cService.GetById(transaction.customer_Id);
                 ModelState.AddModelError("admin_Id", e.Message);
+                return View(transaction);
+            }
+            catch (InvalidDateException e)
+            {
+                ViewBag.bicycleTypes = _btService.GetIdName();
+                ViewBag.usernames = _cService.GetUsernamesAndIds();
+                ViewBag.customer = _cService.GetById(transaction.customer_Id);
+                ModelState.AddModelError("rentalDate", e.Message);
+                return View(transaction);
+            }
+            catch (InvalidExpectedReturnDateException e)
+            {
+                ViewBag.bicycleTypes = _btService.GetIdName();
+                ViewBag.usernames = _cService.GetUsernamesAndIds();
+                ViewBag.customer = _cService.GetById(transaction.customer_Id);
+                ModelState.AddModelError("expectedReturnDate", e.Message);
                 return View(transaction);
             }
             catch (Exception e)
@@ -401,7 +444,7 @@ namespace BikesTest.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Transactions))]
         public ActionResult Delete(int id)
         {
             try

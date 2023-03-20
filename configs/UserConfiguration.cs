@@ -39,9 +39,28 @@ namespace BikesTest.configs
                 password = Service.LoginServices.HashPassword("admin", DateTime.Parse("05/05/2000").ToString("MM/dd/yyyy"))
             });
 
+            builder.HasData(new User
+            {
+                id = 3,
+                birthday = DateTime.Parse("05/05/2000"),
+                email = "terminaladmin@admin.com",
+                firstName = "terminaladmin",
+                lastName = "terminaladmin",
+                username = "terminaladmin",
+                password = Service.LoginServices.HashPassword("terminaladmin", DateTime.Parse("05/05/2000").ToString("MM/dd/yyyy"))
+            });
+
+            builder.HasData(new User
+            {
+                id = 4,
+                birthday = DateTime.Parse("05/05/2000"),
+                email = "superadmin@admin.com",
+                firstName = "superadmin",
+                lastName = "superadmin",
+                username = "superadmin",
+                password = Service.LoginServices.HashPassword("superadmin", DateTime.Parse("05/05/2000").ToString("MM/dd/yyyy"))
+            });
 
         }
-
-
     }
 }

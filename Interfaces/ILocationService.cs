@@ -8,7 +8,12 @@ namespace BikesTest.Interfaces
 {
     public interface ILocationService
     {
-        public Task<List<Location>> GetAll(int transactionId, int bicycleId);
-        public Task<long> GetLastTransactionId(int bicycleId);
+        public List<Location> GetAll(int transactionId, int bicycleId);
+
+        public Location SetActive(int bicycleId);
+
+        public Location UpdateLastTransactionId(int bicycleId, int transactionId);
+
+        public Location ResetActive(int bicyckeId);
     }
 }

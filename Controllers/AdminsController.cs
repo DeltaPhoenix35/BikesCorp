@@ -14,28 +14,28 @@ namespace BikesTest.Controllers
 {
     public class AdminsController : Controller
     {        
-        private IUserService<Admin> _service;
+        private IAdminService<Admin> _service;
 
 
-        public AdminsController(IUserService<Admin> service)
+        public AdminsController(IAdminService<Admin> service)
         {
             _service = service;
             
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Admins))]
         public ActionResult Index()
         {
             return View(_service.GetAll());
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Admins) + ",Admin")]
         public ActionResult Details(int id)
         {   
             return View(_service.GetById(id));
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Admins))]
         public ActionResult Create()
         {
             return View();
@@ -65,7 +65,7 @@ namespace BikesTest.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Admins))]
         public ActionResult Edit(int id)
         {
             return View(_service.GetById(id));
@@ -84,13 +84,19 @@ namespace BikesTest.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch 
+            catch(ExistingUsernameException e)
             {
+                ModelState.AddModelError("user.username", e.Message);
+                return View();
+            }
+            catch (ExistingEmailException e)
+            {
+                ModelState.AddModelError("user.email", e.Message);
                 return View();
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Admins))]
         public ActionResult Delete(int id)
         {
             return View(_service.GetById(id));

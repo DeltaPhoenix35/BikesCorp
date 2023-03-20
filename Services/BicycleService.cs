@@ -140,7 +140,8 @@ namespace BikesTest.Services
                 var bike = bicycles.Where(o => (o.transactions.Any(t => ((start <= t.rentalDate && end >= t.rentalDate) ||
                                                                         (start >= t.rentalDate && end <= t.expectedReturnDate) ||
                                                                         (start <= t.expectedReturnDate && end >= t.expectedReturnDate)) &&
-                                                                         t.isDeleted == false) == false) &&
+                                                                         t.isDeleted == false && 
+                                                                         t.returnDate == null) == false) &&
                                                (o.reservations.Any(t => ((start <= t.reservationDate && end >= t.reservationDate) ||
                                                                         (start >= t.reservationDate && end <= t.expectedReturnDate) ||
                                                                         (start <= t.expectedReturnDate && end >= t.expectedReturnDate)) &&

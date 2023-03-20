@@ -7,10 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static BikesTest.Models.AdminRoles;
 
 namespace BikesTest.Services
 {
-    public class AdminService : IUserService<Admin>
+    public class AdminService : IAdminService<Admin>
     {
         private readonly Context _db;
         private IUserService<User> _uService;
@@ -59,6 +60,7 @@ namespace BikesTest.Services
             return _db.Admins
                     .AsNoTracking()
                     .Include(o => o.user)
+                    .Include(o => o.roles)
                     .Where(o => o.id == id)
                     .SingleOrDefault();
         }
@@ -68,23 +70,27 @@ namespace BikesTest.Services
             if (includeTransactions == true && includeReservations == false)
                 return _db.Admins.AsNoTracking()
                                     .Include(o => o.user)
+                                    .Include(o => o.roles)
                                     .Where(o => o.user.id == id)
                                     .Include(o => o.transactions)
                                     .SingleOrDefault();
             else if (includeTransactions == false && includeReservations == true)
                 return _db.Admins.AsNoTracking()
                                     .Include(o => o.user)
+                                    .Include(o => o.roles)
                                     .Where(o => o.user.id == id)
                                     .SingleOrDefault();
             else if (includeTransactions == true && includeReservations == true)
                 return _db.Admins.AsNoTracking()
                                     .Include(o => o.user)
+                                    .Include(o => o.roles)
                                     .Where(o => o.user.id == id)
                                     .Include(o => o.transactions)
                                     .SingleOrDefault();
             else
                 return _db.Admins.AsNoTracking()
                                 .Include(o => o.user)
+                                .Include(o => o.roles)
                                 .Where(o => o.id == id)
                                 .SingleOrDefault();
         }
@@ -94,6 +100,7 @@ namespace BikesTest.Services
             return _db.Admins
                     .AsNoTracking()
                     .Include(o => o.user)
+                    .Include(o => o.roles)
                     .Where(o => o.user.id == id)
                     .SingleOrDefault();
         }
@@ -103,9 +110,25 @@ namespace BikesTest.Services
             return _db.Admins
                     .AsNoTracking()
                     .Include(o => o.user)
+                    .Include(o => o.roles)
                     .Where(o => o.user.username == username)
                     .SingleOrDefault();
         }
+
+        public List<Admin> GetByRoles(List<Roles> roles)
+        {
+            List<Admin> admins = new List<Admin>();
+            foreach(var role in roles)
+                admins.AddRange(_db.Admins
+                                    .AsNoTracking()
+                                    .Include(o => o.user)
+                                    .Include(o => o.roles)
+                                    .Where(o => o.roles.Any(o => o.role == role))
+                                    .ToList());
+
+            return admins;
+        }
+
 
         public bool IsUsernameExist(string username)
         {
@@ -168,6 +191,7 @@ namespace BikesTest.Services
             User user = dbAdmin.user;
 
             dbAdmin.user = null;
+            dbAdmin.roles = null;
 
             _db.Admins.Update(dbAdmin);
             _db.Users.Update(user);

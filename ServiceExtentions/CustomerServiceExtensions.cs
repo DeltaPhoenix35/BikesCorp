@@ -45,8 +45,8 @@ namespace BikesTest.ServiceExtentions
 
         public static Customer ChangePassword(this IUserService<Customer> cService, Customer row, string password)
         {
-            row.user.password = LoginServices.HashPassword(password, row.user.birthday.ToString());
-
+            row.user.password = LoginServices.HashPassword(password, row.user.birthday.ToString("MM/dd/yyyy"));
+   
             cService.Update(row);
             return row;
         }

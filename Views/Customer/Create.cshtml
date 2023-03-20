@@ -1,79 +1,72 @@
 ﻿@model BikesTest.Models.Customer
 
-@{
-	ViewData["Title"] = "Create";
-	var usernameError = ViewData["UsernameError"] as string;
-	var emailError = ViewData["EmailError"] as string;
-}
+@{ ViewData["Title"] = "Create";
+				var usernameError = ViewData["UsernameError"] as string;
+				var emailError = ViewData["EmailError"] as string; }
 
-<div class="container">
+<div class="Sign-Up-Page">
+	<div class="register-div">
 
-	<h1>Create</h1>
+		<div class="register-img-div" style="flex: 60%;">
+			<h4 class="register-title">Join us now by signing up!</h4>
+			<img class="register-img" src="/images/register.jpg" alt="sign-up-image">
+			<p class="logo" style="margin-top: auto;"><i class="fa-solid fa-bicycle"></i> BikesCo</p>
+		</div>
 
-	<h4>Customer</h4>
-	<hr />
-	<div class="row">
-		<div class="col-md-4">
-			<form asp-action="Create">
-				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-				<div class="form-group">
-					<label asp-for="user.firstName" class="control-label"></label>
-					<input asp-for="user.firstName" type="text" class="form-control" />
-					<span asp-validation-for="user.firstName" class="text-danger"></span>
-				</div>
-				<div class="form-group">
-					<label asp-for="user.lastName" class="control-label"></label>
-					<input asp-for="user.lastName" type="text" class="form-control" />
-					<span asp-validation-for="user.lastName" class="text-danger"></span>
-				</div>
-				<div class="form-group">
-					<label asp-for="user.username" class="control-label"></label>
-					<input asp-for="user.username" class="form-control" />
-					<span asp-validation-for="user.username" class="text-danger"></span>
-					@if (!string.IsNullOrEmpty(usernameError))
-					{
-						<span class="alert-danger">@usernameError</span>
-					}
-				</div>
-				<div class="form-group">
-					<label asp-for="user.email" class="control-label"></label>
-					<input asp-for="user.email" type="email" class="form-control" />
-					<span asp-validation-for="user.email" class="text-danger"></span>
-					@if (!string.IsNullOrEmpty(emailError))
-					{
-						<span class="alert-danger">@emailError</span>
-					}
-				</div>
-				<div class="form-group">
-					<label asp-for="user.password" class="control-label"></label>
-					<input asp-for="user.password" type="password" class="form-control" />
-					<span asp-validation-for="user.password" class="text-danger"></span>
-				</div>
-				<div class="form-group">
-					<label asp-for="user.birthday" class="control-label"></label>
-					<input asp-for="user.birthday" type="date" class="form-control" />
-					<span asp-validation-for="user.birthday" class="text-danger"></span>
-				</div>
-				<div class="form-group">
-					<input type="submit" value="Create" class="btn btn-primary" />
-				</div>
-			</form>
+		<div class="register-form-div" style="flex: 40%;">
+			<h4 class="h4-SignUp">Sign Up</h4>
+			<div class="register-form">
+				<form asp-action="Create">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<div class="form-group">
+						<label asp-for="user.firstName" class="control-label">First Name</label>
+						<input asp-for="user.firstName" type="text" class="form-control form-control-sm" />
+						<span asp-validation-for="user.firstName" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="user.lastName" class="control-label">Last Name</label>
+						<input asp-for="user.lastName" type="text" class="form-control form-control-sm" />
+						<span asp-validation-for="user.lastName" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="user.username" class="control-label">Username</label>
+						<input asp-for="user.username" class="form-control form-control-sm" />
+						<span asp-validation-for="user.username" class="text-danger"></span>
+						@if (!string.IsNullOrEmpty(usernameError))
+						{
+			<span class="alert-danger">@usernameError</span>}
+					</div>
+					<div class="form-group">
+						<label asp-for="user.email" class="control-label">Email</label>
+						<input asp-for="user.email" type="email" class="form-control form-control-sm" />
+						<span asp-validation-for="user.email" class="text-danger"></span>
+						@if (!string.IsNullOrEmpty(emailError))
+						{
+			<span class="alert-danger">@emailError</span>}
+					</div>
+					<div class="form-group">
+						<label asp-for="user.password" class="control-label">Password</label>
+						<input asp-for="user.password" type="password" class="form-control form-control-sm" />
+						<span asp-validation-for="user.password" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="user.birthday" class="control-label">Birthday</label>
+						<input asp-for="user.birthday" type="date" class="form-control form-control-sm" />
+						<span asp-validation-for="user.birthday" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Register" class="btn btn-outline-light submit-btn" style="" />
+					</div>
+				</form>
+			</div>
+			<div>
+				@if (User.IsInRole("Admin"))
+				{
+	<a asp-action="Index" style="float: right; color: white;">Back to List</a> }
+				else
+				{
+	<a asp-controller="Home" asp-action="Index" style="color: white; position: absolute; bottom: 16; right: 35;">Back to Home</a>}
+			</div>
 		</div>
 	</div>
-
-	<div>
-		@if (User.IsInRole("Admin"))
-		{
-			<a asp-action="Index">Back to List</a>
-		}
-		else
-		{
-			<a asp-controller="Home" asp-action="Index">Back to Home</a>
-		}
-	</div>
-
-	@section Scripts {
-		@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-	}
-
 </div>

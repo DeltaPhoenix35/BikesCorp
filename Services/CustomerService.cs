@@ -61,6 +61,7 @@ namespace BikesTest.Services
             dbCustomer.user.firstName = row.user.firstName;
             dbCustomer.user.lastName = row.user.lastName;
             dbCustomer.user.email = row.user.email;
+            dbCustomer.user.password = row.user.password;
 
             User user = dbCustomer.user;
             dbCustomer.user = null;

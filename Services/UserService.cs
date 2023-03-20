@@ -54,7 +54,11 @@ namespace BikesTest.Services
 
         public User GetById(int? id)
         {
-            throw new NotImplementedException();
+            return _db.Users.AsNoTracking().Where(o => o.id == id)
+                            .Include(o => o.admin)
+                            .Include(o => o.superAdmin)
+                            .Include(o => o.customer)
+                            .FirstOrDefault();
         }
 
         public User GetById(int? id, bool includeTransactions, bool includeReservations)

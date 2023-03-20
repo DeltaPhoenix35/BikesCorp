@@ -13,13 +13,13 @@ namespace BikesTest.Services
     public class ReservationServices : IReservationService<Reservation>
     {
         private readonly Context _db;
-        private readonly IUserService<Admin> _aService;
+        private readonly IAdminService<Admin> _aService;
         private readonly IUserService<Customer> _cService;
         private readonly ICouponService<Coupon> _coService;
         private readonly IBicycleService<Bicycle> _bService;
         private readonly ITransactionService<Transaction> _tService;
         public ReservationServices(Context db,
-                                   IUserService<Admin> aService,
+                                   IAdminService<Admin> aService,
                                    IUserService<Customer> cService,
                                    ICouponService<Coupon> coService,
                                    IBicycleService<Bicycle> bService,
@@ -38,6 +38,7 @@ namespace BikesTest.Services
         {
             List<Reservation> reservations = _db.Reservations.AsNoTracking()
                                                              .Where(o => o.isDeleted == false && o.reservationDate.AddHours(hourDelay)  /* delay = 2h */ < DateTime.Now)
+                                                             .Include(o => o.bicycle)
                                                              .ToList();
             if(reservations.Count != 0)
             {
@@ -47,6 +48,14 @@ namespace BikesTest.Services
                     {
                         res.isDeleted = true;
                         _bService.UpdateIsReserved(res.bicycle);
+                    }
+                }
+
+                foreach (var res in reservations)
+                {
+                    if (reservations.Any(o => (o.bicycle_Id == res.bicycle_Id && o.bicycle != null) && o.id != res.id))
+                    {
+                        res.bicycle = null;
                     }
                 }
 

@@ -19,6 +19,21 @@ namespace BikesTest.Migrations
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("AdminAdminRoles", b =>
+                {
+                    b.Property<int>("adminsid")
+                        .HasColumnType("int");
+
+                    b.Property<int>("rolesid")
+                        .HasColumnType("int");
+
+                    b.HasKey("adminsid", "rolesid");
+
+                    b.HasIndex("rolesid");
+
+                    b.ToTable("AdminAdminRoles");
+                });
+
             modelBuilder.Entity("BikesTest.Models.Admin", b =>
                 {
                     b.Property<int>("id")
@@ -50,6 +65,67 @@ namespace BikesTest.Migrations
                             isCurrentlyLogged = false,
                             isSuspended = false,
                             user_id = 2
+                        },
+                        new
+                        {
+                            id = 2,
+                            isCurrentlyLogged = false,
+                            isSuspended = false,
+                            user_id = 3
+                        },
+                        new
+                        {
+                            id = 3,
+                            isCurrentlyLogged = false,
+                            isSuspended = false,
+                            user_id = 4
+                        });
+                });
+
+            modelBuilder.Entity("BikesTest.Models.AdminRoles", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("role")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("AdminRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            role = 3
+                        },
+                        new
+                        {
+                            id = 2,
+                            role = 5
+                        },
+                        new
+                        {
+                            id = 3,
+                            role = 2
+                        },
+                        new
+                        {
+                            id = 4,
+                            role = 1
+                        },
+                        new
+                        {
+                            id = 5,
+                            role = 0
+                        },
+                        new
+                        {
+                            id = 6,
+                            role = 4
                         });
                 });
 
@@ -100,7 +176,7 @@ namespace BikesTest.Migrations
                         new
                         {
                             id = 1,
-                            aquisutionDate = new DateTime(2023, 2, 25, 0, 0, 0, 0, DateTimeKind.Local),
+                            aquisutionDate = new DateTime(2023, 3, 9, 0, 0, 0, 0, DateTimeKind.Local),
                             bicycleType_Id = 1,
                             earningsToDate = 0.0,
                             isConfirmed = true,
@@ -113,7 +189,7 @@ namespace BikesTest.Migrations
                         new
                         {
                             id = 2,
-                            aquisutionDate = new DateTime(2023, 2, 25, 0, 0, 0, 0, DateTimeKind.Local),
+                            aquisutionDate = new DateTime(2023, 3, 9, 0, 0, 0, 0, DateTimeKind.Local),
                             bicycleType_Id = 1,
                             earningsToDate = 0.0,
                             isConfirmed = true,
@@ -312,21 +388,6 @@ namespace BikesTest.Migrations
                         });
                 });
 
-            modelBuilder.Entity("BikesTest.Models.Location", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("timestamp")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Location");
-                });
-
             modelBuilder.Entity("BikesTest.Models.PricingScheme", b =>
                 {
                     b.Property<int>("id")
@@ -516,12 +577,41 @@ namespace BikesTest.Migrations
                     b.ToTable("SubscriptionPlans");
                 });
 
+            modelBuilder.Entity("BikesTest.Models.SuperAdmin", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("user_id")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("user_id")
+                        .IsUnique()
+                        .HasFilter("[user_id] IS NOT NULL");
+
+                    b.ToTable("SuperAdmins");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            user_id = 4
+                        });
+                });
+
             modelBuilder.Entity("BikesTest.Models.Transaction", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("SuperAdminid")
+                        .HasColumnType("int");
 
                     b.Property<int>("admin_Id")
                         .HasColumnType("int");
@@ -560,6 +650,8 @@ namespace BikesTest.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
+
+                    b.HasIndex("SuperAdminid");
 
                     b.HasIndex("admin_Id");
 
@@ -635,7 +727,42 @@ namespace BikesTest.Migrations
                             lastName = "admin",
                             password = "1UzrWHA24VbkJZO+JMC9EDNX92/fgrKOBKd0Vq0F0ho=",
                             username = "admin"
+                        },
+                        new
+                        {
+                            id = 3,
+                            birthday = new DateTime(2000, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            email = "terminaladmin@admin.com",
+                            firstName = "terminaladmin",
+                            lastName = "terminaladmin",
+                            password = "pJ/FhDr73GFAHcqfx8sB/XbqgYeMMCZWa0UrsIty0As=",
+                            username = "terminaladmin"
+                        },
+                        new
+                        {
+                            id = 4,
+                            birthday = new DateTime(2000, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            email = "superadmin@admin.com",
+                            firstName = "superadmin",
+                            lastName = "superadmin",
+                            password = "vf7s74K5RA1l84GDSu0/A1J3xdggQXQekXUeXoUo0sk=",
+                            username = "superadmin"
                         });
+                });
+
+            modelBuilder.Entity("AdminAdminRoles", b =>
+                {
+                    b.HasOne("BikesTest.Models.Admin", null)
+                        .WithMany()
+                        .HasForeignKey("adminsid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BikesTest.Models.AdminRoles", null)
+                        .WithMany()
+                        .HasForeignKey("rolesid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BikesTest.Models.Admin", b =>
@@ -788,8 +915,22 @@ namespace BikesTest.Migrations
                     b.Navigation("subscription");
                 });
 
+            modelBuilder.Entity("BikesTest.Models.SuperAdmin", b =>
+                {
+                    b.HasOne("BikesTest.Models.User", "user")
+                        .WithOne("superAdmin")
+                        .HasForeignKey("BikesTest.Models.SuperAdmin", "user_id")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("user");
+                });
+
             modelBuilder.Entity("BikesTest.Models.Transaction", b =>
                 {
+                    b.HasOne("BikesTest.Models.SuperAdmin", null)
+                        .WithMany("transactions")
+                        .HasForeignKey("SuperAdminid");
+
                     b.HasOne("BikesTest.Models.Admin", "admin")
                         .WithMany("transactions")
                         .HasForeignKey("admin_Id")
@@ -890,11 +1031,18 @@ namespace BikesTest.Migrations
                     b.Navigation("subscriptionDays");
                 });
 
+            modelBuilder.Entity("BikesTest.Models.SuperAdmin", b =>
+                {
+                    b.Navigation("transactions");
+                });
+
             modelBuilder.Entity("BikesTest.Models.User", b =>
                 {
                     b.Navigation("admin");
 
                     b.Navigation("customer");
+
+                    b.Navigation("superAdmin");
                 });
 #pragma warning restore 612, 618
         }

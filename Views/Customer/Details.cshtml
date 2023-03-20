@@ -1,88 +1,101 @@
 ﻿@model BikesTest.Models.Customer
 
-@{
-    ViewData["Title"] = "Details";
-}
-<div class="container">
-	<h1>Details</h1>
+@{ ViewData["Title"] = "My Profile"; }
+<div class="Profile-Page">
+	<div class="profile-div">
+		<div class="profile-container-menu">
+			<div class="profile-menu">
+				<div class="profile-menu-option">
+					<h6 class="profile-menu-link Edit-link" id="Edit"><img class="profile-menu-icons Edit-icon" src="/images/profile/edit.png" alt=""> Edit</h6>
 
-	<div>
-		<h4>Customer @Html.DisplayFor(model => model.id)</h4>
-		<hr />
-		<dl class="row">
-			<dt class="col-sm-2">
-				@Html.DisplayNameFor(model => model.user.firstName)
-			</dt>
-			<dd class="col-sm-10">
-				@Html.DisplayFor(model => model.user.firstName)
-			</dd>
-			<dt class="col-sm-2">
-				@Html.DisplayNameFor(model => model.user.lastName)
-			</dt>
-			<dd class="col-sm-10">
-				@Html.DisplayFor(model => model.user.lastName)
-			</dd>
-			<dt class="col-sm-2">
-				@Html.DisplayNameFor(model => model.user.username)
-			</dt>
-			<dd class="col-sm-10">
-				@Html.DisplayFor(model => model.user.username)
-			</dd>
-			<dt class="col-sm-2">
-				@Html.DisplayNameFor(model => model.user.email)
-			</dt>
-			<dd class="col-sm-10">
-				@Html.DisplayFor(model => model.user.email)
-			</dd>
-			<dt class="col-sm-2">
-				@Html.DisplayNameFor(model => model.user.birthday)
-			</dt>
-			<dd class="col-sm-10">
-				@Html.DisplayFor(model => model.user.birthday)
-			</dd>
-			<dt class="col-sm-2">
-				@Html.DisplayNameFor(model => model.isCurrentlyBiking)
-			</dt>
-			<dd class="col-sm-10">
-				@Html.DisplayFor(model => model.isCurrentlyBiking)
-			</dd>
-			<dt class="col-sm-2">
-				@Html.DisplayNameFor(model => model.timeBiked)
-			</dt>
-			<dd class="col-sm-10">
-				@Html.DisplayFor(model => model.timeBiked)
-			</dd>
-			<dt class="col-sm-2">
-				@Html.DisplayNameFor(model => model.numberOfBikesRented)
-			</dt>
-			<dd class="col-sm-10">
-				@Html.DisplayFor(model => model.numberOfBikesRented)
-			</dd>
-			<dt class="col-sm-2">
-				@Html.DisplayNameFor(model => model.points)
-			</dt>
-			<dd class="col-sm-10">
-				@Html.DisplayFor(model => model.points)
-			</dd>
-		</dl>
+				</div>
+
+				<div class="profile-menu-option">
+					<h6 class="profile-menu-link Password-link" id="Password"><img class="profile-menu-icons Password-icon" src="/images/profile/padlock.png" alt=""> Password</h6>
+					<a class="profile-menu-link" asp-action="ChangePassword" asp-route-id="@Model.id">Change Password</a>
+				</div>
+
+				@if (User.IsInRole("Customer"))
+				{
+					<div class="profile-menu-option">
+						<h6 class="profile-menu-link Profile-link" id="Profile"><img class="profile-menu-icons Profile-icon" src="/images/profile/user.png" alt=""> Profile</h6>
+					</div>
+
+					<div class="profile-menu-option">
+						<h6 class="profile-menu-link Redeem-Coupons-link" id="Redeem-Coupons"><img class="profile-menu-icons Redeem-Coupons-icon" src="/images/profile/discount-coupon.png" alt=""> Redeem Coupons</h6>
+						<a class="profile-menu-link" asp-action="RedeemCoupon" asp-route-id="@Model.id">Redeem Coupon</a>
+
+					</div>
+
+					<div class="profile-menu-option">
+						<h6 class="profile-menu-link Subscriptions-link" id="Subscriptions"><img class="profile-menu-icons Subscriptions-icon" src="/images/profile/subscription-model.png" alt=""> My Subscriptions</h6>
+						<a class="profile-menu-link" asp-controller="Subscription" asp-action="CustomerIndex" asp-route-id="@Model.id">My subscriptions</a>
+
+					</div>
+
+					<div class="profile-menu-option">
+						<h6 class="profile-menu-link Coupons-link" id="Coupons"><img class="profile-menu-icons Coupons-icon" src="/images/profile/promo-code.png" alt=""> My Coupons</h6>
+						<a class="profile-menu-link" asp-controller="Coupon" asp-action="Index" asp-route-id="@Model.id">My Coupons</a>
+					</div>
+					<a class="profile-menu-link" asp-action="Edit" asp-route-id="@Model.id">Edit</a> 
+				}
+				else
+				{
+					<a class="profile-menu-link" asp-action="Index">Back to List</a>
+					<a class="profile-menu-link" asp-controller="Subscription" asp-action="Index" asp-route-id="@Model.id">subscriptions</a>
+					<a class="profile-menu-link" asp-controller="Coupon" asp-action="Index" asp-route-id="@Model.id">Coupons</a>
+				}
+			</div>
+		</div>
+
+		<div class="profile-container-details">
+			<div class="profile-menu-content">
+				<h4 class="h4-Profile" style="text-align: center;">Profile Details</h4>
+				<table>
+					<tr>
+						<td>@Html.DisplayNameFor(model => model.user.firstName)</td>
+						<td>@Html.DisplayFor(model => model.user.firstName)</td>
+					</tr>
+					<tr>
+						<td>@Html.DisplayNameFor(model => model.user.lastName)</td>
+						<td>@Html.DisplayFor(model => model.user.lastName)</td>
+					</tr>
+					<tr>
+						<td>@Html.DisplayNameFor(model => model.user.username)</td>
+						<td>@Html.DisplayFor(model => model.user.username)</td>
+					</tr>
+					<tr>
+						<td>@Html.DisplayNameFor(model => model.user.email)</td>
+						<td>@Html.DisplayFor(model => model.user.email)</td>
+					</tr>
+					<tr>
+						<td>@Html.DisplayNameFor(model => model.user.birthday)</td>
+						<td>@Html.DisplayFor(model => model.user.birthday)</td>
+					</tr>
+					<tr>
+						<td>@Html.DisplayNameFor(model => model.isCurrentlyBiking)</td>
+						<td>@Html.DisplayFor(model => model.isCurrentlyBiking)</td>
+					</tr>
+					<tr>
+						<td>@Html.DisplayNameFor(model => model.timeBiked)</td>
+						<td>@Html.DisplayFor(model => model.timeBiked)</td>
+					</tr>
+					<tr>
+						<td>@Html.DisplayNameFor(model => model.numberOfBikesRented)</td>
+						<td>@Html.DisplayFor(model => model.numberOfBikesRented)</td>
+					</tr>
+					<tr>
+						<td>@Html.DisplayNameFor(model => model.points)</td>
+						<td>@Html.DisplayFor(model => model.points)</td>
+					</tr>
+				</table>
+			</div>
+		</div>
 	</div>
-	<div style="width:100%">
 
-		<a asp-action="Edit" asp-route-id="@Model.id">Edit</a> <content>|</content>
-		<a asp-action="ChangePassword" asp-route-id="@Model.id">Change Password</a> <content>|</content>
-		@if (User.IsInRole("Customer"))
-		{
-			<a asp-controller="Home" asp-action="Index">Back to Home</a> <content>|</content>
-			<a asp-action="RedeemCoupon" asp-route-id="@Model.id">Redeem Coupon</a> <content>|</content>
-			<a asp-controller="Subscription" asp-action="CustomerIndex" asp-route-id="@Model.id">My subscriptions</a> <content>|</content>
-			<a asp-controller="Coupon" asp-action="Index" asp-route-id="@Model.id">My Coupons</a>
-		}
-		else
-		{
-			<a asp-action="Index">Back to List</a> <content>|</content>
-			<a asp-controller="Subscription" asp-action="Index" asp-route-id="@Model.id">subscriptions</a> <content>|</content>
-			<a asp-controller="Coupon" asp-action="Index" asp-route-id="@Model.id">Coupons</a>
-		}
 
-	</div>
+	<script type="text/javascript">
+		var userId = @Model.id;
+		var profileId = @Model.user_id;
+	</script>
 </div>

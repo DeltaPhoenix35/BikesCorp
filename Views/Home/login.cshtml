@@ -1,44 +1,48 @@
 ﻿@model BikesTest.Models.User
-@{
-	ViewData["Title"] = "Login";
-	var loginError = ViewData["LoginError"] as string;
-}
+@{ ViewData["Title"] = "Login";
+				var loginError = ViewData["LoginError"] as string; }
 
-<div class="container">
-	<h1>Login</h1>
-
+<div class="Sign-Up-Page">
 	@if (!string.IsNullOrEmpty(loginError))
 	{
-		<span class="alert-danger">@loginError</span>
-	}
+<span class="alert-danger">@loginError</span>}
+	<div class="login-div">
+		<div class="login-form-div" style="flex: 40%; border-radius: 25px 0 0 25px;">
+			<h4 class="h4-Login">Login</h4>
 
-	<hr />
-	<div class="row">
-		<div class="col-md-4">
-			<form asp-action="login" asp-route-returnUrl="@ViewData["ReturnUrl"]">
-				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-				<div class="form-group">
-					<label asp-for="username" class="control-label"></label>
-					<input asp-for="username" type="text" class="form-control" />
-					<span asp-validation-for="username" class="text-danger"></span>
-				</div>
+			<div class="login-form">
+				<form asp-action="login" asp-route-returnUrl="@ViewData["ReturnUrl"]">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<div class="form-group">
+						<label asp-for="username" class="control-label"></label>
+						<input asp-for="username" type="text" class="form-control" />
+						<span asp-validation-for="username" class="text-danger"></span>
+					</div>
 
-				<div class="form-group">
-					<label asp-for="password" class="control-label"></label>
-					<input asp-for="password" type="password" class="form-control" />
-					<span asp-validation-for="password" class="text-danger"></span>
-				</div>
+					<div class="form-group">
+						<label asp-for="password" class="control-label"></label>
+						<input asp-for="password" type="password" class="form-control" />
+						<span asp-validation-for="password" class="text-danger"></span>
+					</div>
 
-				<div class="form-group">
-					<input type="submit" value="Login" class="btn btn-primary" />
-				</div>
-			</form>
+					<div class="form-group">
+						<input type="submit" value="Login" class="btn btn-outline-light submit-btn" />
+					</div>
+				</form>
+			</div>
+			<div>
+				<a asp-action="Index" style="color: white; position: absolute; bottom: 16; left: 35;">Back to Home</a>
+			</div>
 		</div>
+		<div class="login-img-div" style="flex: 60%; border-radius: 0 25px 25px 0;">
+			<h4 class="register-title">Welcome Back</h4>
+			<img class="login-img" src="/images/login.png" alt="login-image">
+			<p class="logo"><i class="fa-solid fa-bicycle"></i> BikesCo</p>
+		</div>
+
 	</div>
 
-	<div>
-		<a asp-action="Index">Back to Home</a>
-	</div>
+
 
 	@section Scripts {
 		@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

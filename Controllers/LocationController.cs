@@ -1,9 +1,13 @@
 ﻿using BikesTest.Interfaces;
 using BikesTest.Models;
+using FireSharp.Config;
+using FireSharp.Interfaces;
+using FireSharp.Response;
 using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,108 +19,55 @@ namespace BikesTest.Controllers
     public class LocationController : Controller
     {
 
-        public LocationController()
+        private readonly IFirebaseConfig config = new FirebaseConfig
         {
-            
+            AuthSecret = "iCprAJzqdlLz0mou7g8j6D2eOJFzU041F0dfbdI5",
+            BasePath = "https://maps2018-415d9-default-rtdb.europe-west1.firebasedatabase.app"
+        };
+        IFirebaseClient _client;
+
+        private readonly ILocationService _lService;
+
+        public LocationController(ILocationService lService)
+        {
+            _client = new FireSharp.FirebaseClient(config);
+            _lService = lService;
         }
 
-        //string path = AppDomain.CurrentDomain.BaseDirectory + @"maps2018.json";
 
-        FirestoreDb db = FirestoreDb.Create("maps2018-415d9");
-
-
-        // GET: LocationController
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var collection = await db.Collection("locations").Document("0").Collection("records").OrderBy("recordTime").GetSnapshotAsync();
-            List<Location> locations = new List<Location>();
+            FirebaseResponse response = _client.Get("locations/tests");
 
-            foreach (DocumentSnapshot documentSnapshot in collection.Documents)
+            dynamic collection = JsonConvert.DeserializeObject<dynamic>(response.Body);
+
+            var list = new List<Location>();
+            if (collection != null)
             {
-                if (documentSnapshot.Exists)
+                foreach (var item in collection)
                 {
-                    Dictionary<string, object> city = documentSnapshot.ToDictionary();
-                    
-                    Location loc = new Location();
-
-                    loc.Id = (long)city["transaction_id"];
-                    loc.timestamp = ((Timestamp)city["recordTime"]).ToDateTime();
-                    loc.geoPoint = (GeoPoint)city["location"];
-
-                    locations.Add(loc);
+                    list.Add(JsonConvert.DeserializeObject<Location>(((JProperty)item).Value.ToString()));
                 }
             }
 
-            return View(locations);
+            return View(list);
         }
 
-        // GET: LocationController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult SetActive(int bicycleId)
         {
-            return View();
+            _lService.SetActive(bicycleId);
+            
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: LocationController/Create
-        public ActionResult Create()
+        public ActionResult ResetActive(int bicycleId)
         {
-            return View();
+            _lService.ResetActive(bicycleId);
+
+            return RedirectToAction(nameof(Index));
         }
 
-        // POST: LocationController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: LocationController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
-        // POST: LocationController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: LocationController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: LocationController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

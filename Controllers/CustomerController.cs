@@ -16,10 +16,10 @@ namespace BikesTest.Controllers
     public class CustomerController : Controller
     {
         private readonly IUserService<Customer> _cService;
-        private readonly IUserService<Admin> _aService;
+        private readonly IAdminService<Admin> _aService;
         private readonly ICouponTypeService<CouponType> _cotService;
         public CustomerController(IUserService<Customer> cService,
-                                  IUserService<Admin> aService,
+                                  IAdminService<Admin> aService,
                                   ICouponTypeService<CouponType> cotService)
         {
             _cService = cService;
@@ -27,21 +27,22 @@ namespace BikesTest.Controllers
             _cotService = cotService;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Customers))]
         public ActionResult Index()
         {
             return View(_cService.GetAll());
         }
 
-        [Authorize]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Customers) + ",Customer")]
         public ActionResult Details(int id)
         {
-            if (User.IsInRole("Admin"))
-            {
-                return View(_cService.GetById(id));
-            }
             try
             {
+                if (User.IsInRole(nameof(AdminRoles.Roles.Customers)) || User.IsInRole("SuperAdmin"))
+                {
+                    return View(_cService.GetById(id));
+                }
+
                 var customer = _cService.GetByUserId(id);
                 this.IsIdAndConnectedCustomerMatch(customer.user.id);
                 return View(customer);
@@ -59,24 +60,6 @@ namespace BikesTest.Controllers
         
         public ActionResult Create()
         {
-            if (User.IsInRole("Admin"))
-            {
-                try
-                {
-                    int currentAdminId = Int32.Parse(User.Identities.FirstOrDefault().FindFirst("Id").Value);
-                    _aService.CheckSuspended(currentAdminId);
-                    return View();
-                }
-                catch (SuspendedAdminException e)
-                {
-                    TempData["AdminSuspendedError"] = e.Message;
-                    return RedirectToAction("Index");
-                }
-                catch
-                {
-                    return RedirectToAction("Index");
-                }
-            }
             return View();
         }
 
@@ -110,33 +93,31 @@ namespace BikesTest.Controllers
 
         }
 
-        [Authorize]
+        [HttpGet]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Customers) + ",Customer")]
         public ActionResult Edit(int id)
         {
-            if (User.IsInRole("Admin"))
+            try
             {
-                try
+                if (User.IsInRole(nameof(AdminRoles.Roles.Customers)))
                 {
                     int currentAdminId = Int32.Parse(User.Identities.FirstOrDefault().FindFirst("Id").Value);
                     _aService.CheckSuspended(currentAdminId);
                     return View(_cService.GetById(id));
                 }
-                catch (SuspendedAdminException e)
+                else if(User.IsInRole("SuperAdmin"))
                 {
-                    TempData["AdminSuspendedError"] = e.Message;
-                    return RedirectToAction("Index");
+                    return View(_cService.GetById(id));
                 }
-                catch
-                {
-                    return RedirectToAction("Index");
-                }
-            }
 
-            try
-            {
                 var customer = _cService.GetById(id);
                 this.IsIdAndConnectedCustomerMatch(customer.user.id);
                 return View(customer);
+            }
+            catch (SuspendedAdminException e)
+            {
+                TempData["AdminSuspendedError"] = e.Message;
+                return RedirectToAction("Index");
             }
             catch (LoggedIdMissmatchException)
             {
@@ -196,33 +177,32 @@ namespace BikesTest.Controllers
             }
         }
 
-        [Authorize]
+        [HttpGet]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Customers) + ",Customer")]
         public ActionResult ChangePassword(int id)
         {
-            if (User.IsInRole("Admin"))
+            try
             {
-                try
+                if (User.IsInRole(nameof(AdminRoles.Roles.Customers)))
                 {
                     int currentAdminId = Int32.Parse(User.Identities.FirstOrDefault().FindFirst("Id").Value);
                     _aService.CheckSuspended(currentAdminId);
+
                     return View(_cService.GetById(id));
                 }
-                catch (SuspendedAdminException e)
+                else if (User.IsInRole("SuperAdmin"))
                 {
-                    TempData["AdminSuspendedError"] = e.Message;
-                    return RedirectToAction("Index");
+                    return View(_cService.GetById(id));
                 }
-                catch
-                {
-                    return RedirectToAction("Index");
-                }
-            }
 
-            try
-            {
                 var customer = _cService.GetById(id);
                 this.IsIdAndConnectedCustomerMatch(customer.user.id);
-                return View(customer);
+                return View(customer.user);
+            }
+            catch (SuspendedAdminException e)
+            {
+                TempData["AdminSuspendedError"] = e.Message;
+                return RedirectToAction("Index");
             }
             catch (LoggedIdMissmatchException)
             {
@@ -248,34 +228,31 @@ namespace BikesTest.Controllers
             {
                 return View(_cService.GetById(id));
             }
-            
         }
-        [Authorize]
+
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Customers) + ",Customer")]
         public ActionResult Delete(int id)
         {
-            if (User.IsInRole("Admin"))
+            try
             {
-                try
+                if (User.IsInRole(nameof(AdminRoles.Roles.Customers)))
                 {
                     int currentAdminId = Int32.Parse(User.Identities.FirstOrDefault().FindFirst("Id").Value);
                     _aService.CheckSuspended(currentAdminId);
                     return View(_cService.GetById(id));
                 }
-                catch (SuspendedAdminException e)
+                else if (User.IsInRole("SuperAdmin"))
                 {
-                    TempData["AdminSuspendedError"] = e.Message;
-                    return RedirectToAction("Index");
+                    return View(_cService.GetById(id));
                 }
-                catch
-                {
-                    return RedirectToAction("Index");
-                }
-            }
 
-            try
-            {
                 this.IsIdAndConnectedCustomerMatch(id);
                 return View(_cService.GetById(id));
+            }
+            catch (SuspendedAdminException e)
+            {
+                TempData["AdminSuspendedError"] = e.Message;
+                return RedirectToAction("Index");
             }
             catch (LoggedIdMissmatchException)
             {
@@ -285,7 +262,7 @@ namespace BikesTest.Controllers
             catch
             {
                 return Redirect("/Home");
-            }
+            }            
         }
 
         [HttpPost]
@@ -300,7 +277,7 @@ namespace BikesTest.Controllers
                 _cService.Delete(customer);  
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception e)
             {
                 return View();
             }

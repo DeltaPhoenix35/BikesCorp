@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static BikesTest.Models.Admin;
+using static BikesTest.Models.AdminRoles;
 
 namespace BikesTest.configs
 {
@@ -27,6 +29,22 @@ namespace BikesTest.configs
                 isCurrentlyLogged = false,
                 isSuspended = false,
                 user_id = 2,
+            });
+
+            builder.HasData(new Admin
+            {
+                id = 2,
+                isCurrentlyLogged = false,
+                isSuspended = false,
+                user_id = 3,
+            });
+
+            builder.HasData(new Admin
+            {
+                id = 3,
+                isCurrentlyLogged = false,
+                isSuspended = false,
+                user_id = 4
             });
         }
     }

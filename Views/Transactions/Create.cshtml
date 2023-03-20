@@ -59,10 +59,6 @@
 					}
 				</div>
 				<div class="form-group">
-					@*<input hidden readonly asp-for="bicycle_Id" value="1" />*@
-
-					<!-- chose either by bike or by type depending on who is logged in (admin -> by id / customer -> by type) -->
-
 					<label asp-for="bicycleType_Id" class="control-label"></label>
 					@if (ViewBag.bicycleTypes != null)
 					{

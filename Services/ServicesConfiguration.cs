@@ -15,7 +15,7 @@ namespace BikesTest.Services
         {
             services.AddScoped(typeof(IUserService<User>),
                 typeof(UserService));
-            services.AddScoped(typeof(IUserService<Admin>),
+            services.AddScoped(typeof(IAdminService<Admin>),
                 typeof(AdminService));
             services.AddScoped(typeof(IBicycleService<Bicycle>),
                 typeof(BicycleService));

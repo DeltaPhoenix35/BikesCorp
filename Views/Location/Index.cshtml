@@ -21,7 +21,7 @@
 					Longitude
 				</th>
 				<th>
-					@Html.DisplayNameFor(model => model.timestamp)
+					@Html.DisplayNameFor(model => model.dateTime)
 				</th>
 			</tr>
 		</thead>
@@ -33,13 +33,13 @@
 						@Html.DisplayFor(modelItem => item.Id)
 					</td>
 					<td>
-						@Html.DisplayFor(modelItem => (item.geoPoint).Latitude)
+						@Html.DisplayFor(modelItem => (item.location))
 					</td>
 					<td>
-						@Html.DisplayFor(modelItem => (item.geoPoint).Longitude)
+						@Html.DisplayFor(modelItem => (item.location))
 					</td>
 					<td>
-						@Html.DisplayFor(modelItem => item.timestamp)
+						@Html.DisplayFor(modelItem => item.dateTime)
 					</td>
 				</tr>
 			}

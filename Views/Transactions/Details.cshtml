@@ -3,6 +3,35 @@
 @{
     ViewData["Title"] = "Details";
 }
+
+<script>
+	var list = [];
+</script>
+
+<script type="text/javascript">
+	const socket = new WebSocket('wss://localhost:44364/ws/' + @Model.id);
+	var i = 0;
+
+	socket.addEventListener('message', function (event) {
+		list = [];
+		console.log('Data Received', event.data);
+		list.push(event.data);
+
+		list.forEach(function (entry) {
+			document.getElementById("values").innerHTML += entry + " ";
+		});
+	});
+
+	socket.addEventListener('open', function (event) {
+		socket.send('Connection Open');
+
+		setInterval(function () {
+			socket.send(@Model.id)
+		}, 2000);
+	});
+</script>
+
+
 <div class="container">
 	<h1>Details</h1>
 
@@ -71,24 +100,34 @@
 						{
 							<tr class="col-md-12">
 								<th>
-									@Html.DisplayFor(modelItem => item.timestamp)
+									@Html.DisplayFor(modelItem => item.dateTime)
 								</th>
 							</tr>
 
 							<tr class="col-md-12">
 								<td class="col-md-6">
-									@Html.DisplayFor(modelItem => item.geoPoint.Latitude)
+									@Html.DisplayFor(modelItem => item.location)
 								</td>
 								<td class="col-md-6">
-									@Html.DisplayFor(modelItem => item.geoPoint.Longitude)
+									@Html.DisplayFor(modelItem => item.location)
 								</td>
 							</tr>
 
 						}
 					}
+					<tr class="col-md-12">
+						<th>
+							
+						</th>
+					</tr>
 
+					<tr class="col-md-12">
+						<td class="col-md-6" id="values">
+							
+						</td>
+					</tr>
 				</table>
-				</div>
+			</div>
 		</div>
 		
 	</div>

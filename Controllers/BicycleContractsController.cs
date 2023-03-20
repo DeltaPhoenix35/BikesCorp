@@ -29,11 +29,11 @@ namespace BikesTest.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin,Customer")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Bicycles) + ",Customer")]
         public ActionResult Index()
         {
             List<BicycleContract> list;
-            if (User.IsInRole("Admin"))
+            if (User.IsInRole(nameof(AdminRoles.Roles.Bicycles)) || User.IsInRole("SuperAdmin"))
                 list = _bcService.GetAll(true, false);
             else
             {
@@ -45,11 +45,11 @@ namespace BikesTest.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin,Customer")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Bicycles) + ",Customer")]
         public ActionResult InactiveIndex()
         {
             List<BicycleContract> list;
-            if (User.IsInRole("Admin"))
+            if (User.IsInRole(nameof(AdminRoles.Roles.Bicycles)) || User.IsInRole("SuperAdmin"))
                 list = _bcService.GetAll(false, false);
             else
             {
@@ -61,11 +61,11 @@ namespace BikesTest.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin,Customer")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Bicycles) + ",Customer")]
         public ActionResult DeniedIndex()
         {
             List<BicycleContract> list;
-            if (User.IsInRole("Admin"))
+            if (User.IsInRole(nameof(AdminRoles.Roles.Bicycles)) || User.IsInRole("SuperAdmin"))
                 list = _bcService.GetAll(false, true);
             else
             {
@@ -78,7 +78,7 @@ namespace BikesTest.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "Admin,Customer")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Bicycles) + ",Customer")]
         public ActionResult Create()
         {
             ViewBag.types = _btService.GetIdName();
@@ -107,12 +107,12 @@ namespace BikesTest.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin,Customer")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Bicycles) + ",Customer")]
         public ActionResult Details(int id)
         {
             try
             {
-                if (User.IsInRole("Admin"))
+                if (User.IsInRole(nameof(AdminRoles.Roles.Bicycles)) || User.IsInRole("SuperAdmin"))
                     return View(_bcService.GetById(id));
                 else
                 {
@@ -130,7 +130,7 @@ namespace BikesTest.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Bicycles))]
         public ActionResult Confirm(int id)
         {
             return View(_bcService.GetById(id));
@@ -189,7 +189,7 @@ namespace BikesTest.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Bicycles))]
         public ActionResult Deny(int id)
         {
             //check if admin has access to denying

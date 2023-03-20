@@ -15,14 +15,16 @@ namespace BikesTest.Services
     {
         
         private readonly Context _db;
-        private readonly IUserService<Admin> _aService;
+        private readonly IUserService<User> _uService;
+        private readonly IAdminService<Admin> _aService;
         private readonly IUserService<Customer> _cService;
         private readonly ICouponService<Coupon> _coService;
         private readonly IBicycleService<Bicycle> _bService;
         private readonly IBicycleTypeService<BicycleType> _btService;
         private readonly ILocationService _lService;
         public TransactionService(Context db,
-                                  IUserService<Admin> aService,
+                                  IUserService<User> uService,
+                                  IAdminService<Admin> aService,
                                   IUserService<Customer> cService,
                                   ICouponService<Coupon> coService,
                                   IBicycleService<Bicycle> bService,
@@ -30,6 +32,7 @@ namespace BikesTest.Services
                                   ILocationService lService)
         {
             _db = db;
+            _uService = uService;
             _aService = aService;
             _cService = cService;
             _coService = coService;
@@ -110,17 +113,22 @@ namespace BikesTest.Services
                 bicycle = _bService.GetById(row.bicycle_Id);
 
             if (bicycle == null)
-                throw new BikeDoesntExistException("Bicycle doesn't exist in data base"); //change to bike not available
+                throw new BikeDoesntExistException("Bicycle type not available"); 
             row.bicycle_Id = bicycle.id;
 
             Admin admin = _aService.GetByUserId(row.admin_Id);
             if (admin == null)
+            {      
                 throw new AdminDoesntExistException("Admin doesn't exist in data base");
+            }
+               
 
             this.SetTransactionNotDeleted(row);
 
             if (row.returnDate != null)
-                throw new InvalidOperationException("Cannot have a return date at creation");
+                throw new InvalidDateException("Cannot have a return date at creation");
+            if (row.expectedReturnDate < row.rentalDate || row.expectedReturnDate < DateTime.Now)
+                throw new InvalidExpectedReturnDateException("Invalid Expected Return Date");
 
             if (customer.isCurrentlyBiking)
                 throw new CurrentlyBikingException("This customer is currently biking");
@@ -150,6 +158,8 @@ namespace BikesTest.Services
 
             //row.transactionNum = lastTransactionId.ToString() + "_" +  bicycle.id;
 
+            
+
             row = BuildTransaction(row, null, bicycle, customer, admin);
             customer.reservations = null;
             bicycle.reservations = null;
@@ -161,6 +171,9 @@ namespace BikesTest.Services
             //_db.Admins.Update(admin);
 
             _db.SaveChanges();
+
+            _lService.UpdateLastTransactionId(bicycle.id, _db.Transactions.ToList().OrderBy(o => o.id).LastOrDefault().id);
+            _lService.SetActive(bicycle.id);
 
             _db.ChangeTracker.Clear();
 
@@ -211,8 +224,9 @@ namespace BikesTest.Services
             _db.Admins.Update(admin);
             _db.SaveChanges();
 
-            return lastTransaction;
+            _lService.ResetActive(bicycle.id);
 
+            return lastTransaction;
         }
 
         public Transaction Update(Transaction row)
@@ -238,6 +252,7 @@ namespace BikesTest.Services
                     _db.Bicycles.Update(oldBicycle);
 
                     Bicycle newBicycle = _bService.GetById(row.bicycle_Id);
+                    newBicycle.bicycleType = _btService.GetById(newBicycle.bicycleType_Id);
                     if (newBicycle == null)
                         throw new BikeDoesntExistException("Bicycle doesn't exist in data base");
                     else if (newBicycle.isCurrentlyRented)
@@ -281,6 +296,7 @@ namespace BikesTest.Services
                 else
                 {
                     Bicycle oldBicycle = dbTransaction.bicycle;
+                    oldBicycle.bicycleType = _btService.GetById(oldBicycle.bicycleType_Id);
                     _bService.IncreaseEarningsToDate(oldBicycle, -(double)dbTransaction.costOfTransaction);
 
                     this.SetTransactionDuration(row);
@@ -380,6 +396,8 @@ namespace BikesTest.Services
 
             _db.Update(row);
             _db.SaveChanges();
+
+            _lService.ResetActive(row.bicycle_Id);
         }
 
         public List<Transaction> GetAll()
@@ -425,7 +443,7 @@ namespace BikesTest.Services
             return transaction;
         }
 
-        public async Task<Transaction> GetByIdAsync(int? id)
+        public Transaction GetByIdIncLocations(int? id)
         {
             Transaction transaction = _db.Transactions.AsNoTracking()
                                            .Where(o => o.isDeleted == false)
@@ -435,7 +453,7 @@ namespace BikesTest.Services
                                            .Include(m => m.bicycle)
                                            .SingleOrDefault();
 
-            transaction.locations = await _lService.GetAll(Int32.Parse(transaction.transactionNum.ElementAt(0).ToString()), transaction.bicycle_Id);
+            transaction.locations = _lService.GetAll(transaction.id, transaction.bicycle_Id);
 
             return transaction;
         }

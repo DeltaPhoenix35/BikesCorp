@@ -19,11 +19,11 @@ namespace BikesTest.Controllers
         private readonly IBicycleService<Bicycle> _bService;
         private readonly IBicycleTypeService<BicycleType> _btService;
         private readonly IUserService<Customer> _cService;
-        private readonly IUserService<Admin> _aService;
+        private readonly IAdminService<Admin> _aService;
 
         public ReservationsController(IReservationService<Reservation> rService,
                                       ITransactionService<Transaction> tService,
-                                      IUserService<Admin> aService,
+                                      IAdminService<Admin> aService,
                                       IUserService<Customer> cService,
                                       IBicycleService<Bicycle> bService,
                                       IBicycleTypeService<BicycleType> btService)
@@ -36,11 +36,11 @@ namespace BikesTest.Controllers
             _btService = btService;
         }
 
-        [Authorize(Roles = "Admin,Customer")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Reservations) + ",Customer")]
         [HttpGet]
         public ActionResult Index()
         {
-            if (User.IsInRole("Admin"))
+            if (User.IsInRole("SuperAdmin") ||User.IsInRole(nameof(AdminRoles.Roles.Reservations)))
                 return View(_rService.GetAll());
             else {
                 int id = Int32.Parse(User.Identities.FirstOrDefault().FindFirst("Id").Value);
@@ -49,7 +49,7 @@ namespace BikesTest.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin,Customer")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Reservations) + ",Customer")]
         public ActionResult Details(int id)
         {
             try
@@ -156,7 +156,7 @@ namespace BikesTest.Controllers
 
         
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Reservations))]
         public ActionResult Edit(int id)
         {
             try
@@ -231,7 +231,7 @@ namespace BikesTest.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Reservations))]
         public ActionResult Confirm(int id)
         {
             return View(_rService.GetById(id));
@@ -286,7 +286,7 @@ namespace BikesTest.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin,Customer")]
+        [Authorize(Roles = "SuperAdmin," + nameof(AdminRoles.Roles.Reservations) + ",Customer")]
         public ActionResult Cancel(int id)
         {
             try { 
