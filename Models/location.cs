@@ -1,20 +1,3 @@
-﻿using BikesTest.Interfaces;
-using Google.Cloud.Firestore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.Models
-{
-    [FirestoreData]
-    public class Location 
-    {
-        public long Id { get; set; }
-
-        public string location { get; set; }
-
-        public DateTime dateTime { get; set; }
-
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:58530981f29125acd1ba852d9361e87c2c4024dc403326303d2fc0395a29d30d
+size 546

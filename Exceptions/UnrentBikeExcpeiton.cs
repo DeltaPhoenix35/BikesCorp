@@ -1,23 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.Exceptions
-{
-    public class UnrentBikeExcpeiton : InvalidOperationException
-    {
-        public UnrentBikeExcpeiton()
-        {
-
-        }
-        public UnrentBikeExcpeiton(string message) : base(message)
-        {
-
-        }
-        public UnrentBikeExcpeiton(string message, Exception inner) : base(message, inner)
-        {
-
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:496651234147cf21d3a7b838d7308ddd9b343515b486cd1ffe683f0f341833eb
+size 471

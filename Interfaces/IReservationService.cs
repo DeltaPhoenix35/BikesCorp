@@ -1,21 +1,3 @@
-﻿using BikesTest.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.Interfaces
-{
-    public interface IReservationService<T> : IEntityService<T>
-    {
-        public T GetByBicycleId(int bicycleId);
-
-        public void ConfirmReservation(T row, int currentAdminId);
-
-        public void CancelReservation(T row);
-
-        public List<T> GetByCustomerUserId(int id);
-
-        void VerifyExpiration(int hourDelay);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:60539adc9900d2521b416c26a7decdbec1f21b5d5666858c7421c05c73d02d32
+size 535

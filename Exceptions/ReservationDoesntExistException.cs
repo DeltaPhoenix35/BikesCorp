@@ -1,23 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.Exceptions
-{
-    public class ReservationDoesntExistException : InvalidOperationException
-    {
-        public ReservationDoesntExistException()
-        {
-
-        }
-        public ReservationDoesntExistException(string message) : base(message)
-        {
-
-        }
-        public ReservationDoesntExistException(string message, Exception inner) : base(message, inner)
-        {
-
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:f0efe0ff85660fe8caea54907a0df174020be592b2f65f12e8c70720c6baa711
+size 519

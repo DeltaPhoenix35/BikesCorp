@@ -1,29 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.Models
-{
-    public class BicycleType
-    {
-        public int id { get; set; }
-
-        public string typeName { get; set; }
-
-        public string description { get; set; }
-
-        //pictures
-
-        [Display(Name = "Lease Price")]
-        public int pricingScheme_Id { get; set; }
-        public PricingScheme pricing { get; set; }
-
-        public int reduction { get; set; } = 0;
-
-        public List<Bicycle> bicycles { get; set; }
-
-        public List<BicycleContract> bicycleContracts { get; set; }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:26d68b28e76d982b7db502a7d1b5a6bdece87d098c08fca4255c8a5831643c2f
+size 1015

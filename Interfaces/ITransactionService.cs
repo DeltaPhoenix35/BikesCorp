@@ -1,28 +1,3 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.Interfaces
-{
-    public interface ITransactionService<T> : IEntityService<T>
-    {
-        //T BuildTransaction(T row);
-
-        T GetByIdIncLocations(int? id);
-
-        List<T> GetAllDeleted();
-
-        List<T> GetAllByCustomerId(int id);
-
-        T NegateTransaction(T row);
-
-        T GetByDeletedId(int? id);
-
-        ICollection<T> GetByBicycleId(int id);
-
-        T ReturnBicycle(T row);
-
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:55df576256996ec712612e8bc5719c6b9f0e8a99d69580094ae17ce96316ebca
+size 591

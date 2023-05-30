@@ -1,29 +1,3 @@
-{
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:42837",
-      "sslPort": 44364
-    }
-  },
-  "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "GOOGLE_APPLICATION_CREDENTIALS": "D:\\\\prog projects\\\\ASP.NET MVC\\\\BikesTest\\\\BikesTest\\\\maps2018.json",
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "BikesTest": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "dotnetRunMessages": "true",
-      "applicationUrl": "https://localhost:5001;http://localhost:5000"
-    }
-  }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:323d061a2cf941fb9f80d7f78460e5fc8c7cb3c777e9c3f4eea860cabf26e1b6
+size 680

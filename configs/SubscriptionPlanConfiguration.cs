@@ -1,24 +1,3 @@
-﻿using BikesTest.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.configs
-{
-    public class SubscriptionPlanConfiguration : IEntityTypeConfiguration<SubscriptionPlan>
-    {
-        public void Configure(EntityTypeBuilder<SubscriptionPlan> builder)
-        {
-            builder.HasKey(o => o.id);
-
-            builder.HasMany(o => o.subscriptionDays)
-                   .WithOne(t => t.subscription)
-                   .HasForeignKey(t => t.subscription_Id)
-                   .OnDelete(DeleteBehavior.Cascade);
-
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:6ed437709c884e8fbaa163c55e5ff614ca8985e4ef1f0f16f3d808ede3d4254d
+size 703

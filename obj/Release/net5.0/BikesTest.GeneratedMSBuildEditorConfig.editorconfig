@@ -1,10 +1,3 @@
-is_global = true
-build_property.TargetFramework = net5.0
-build_property.TargetPlatformMinVersion = 
-build_property.UsingMicrosoftNETSdkWeb = true
-build_property.ProjectTypeGuids = 
-build_property.PublishSingleFile = 
-build_property.IncludeAllContentForSelfExtract = 
-build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
-build_property.RootNamespace = BikesTest
-build_property.ProjectDir = D:\Prog\BikesTest\
+version https://git-lfs.github.com/spec/v1
+oid sha256:25577c12fa930a83ef9c3ce360ebf1f7f05b1033491e1f2c35976ddff43e9730
+size 427

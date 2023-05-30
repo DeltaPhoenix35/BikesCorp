@@ -1,23 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.Exceptions
-{
-    public class CustomerIdsMissmatchException : InvalidOperationException
-    {
-        public CustomerIdsMissmatchException()
-        {
-
-        }
-        public CustomerIdsMissmatchException(string message) : base(message)
-        {
-
-        }
-        public CustomerIdsMissmatchException(string message, Exception inner) : base(message, inner)
-        {
-
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:43cd188a7442fba475002608593c7dced991f2a28d4cff0b6691a933cb720a58
+size 511

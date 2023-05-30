@@ -1,23 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.Exceptions
-{
-    public class AdminDoesntExistException : InvalidOperationException
-    {
-        public AdminDoesntExistException()
-        {
-
-        }
-        public AdminDoesntExistException(string message) : base(message)
-        {
-
-        }
-        public AdminDoesntExistException(string message, Exception inner) : base(message, inner)
-        {
-
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:509202e7d352db9c232ab1d282d16b22d8dd79fa83c93ed825c55eb492f744fa
+size 495

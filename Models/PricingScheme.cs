@@ -1,29 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.Models
-{
-    public class PricingScheme
-    {
-        public int id { get; set; }
-
-        public double perHour { get; set; }
-
-        public double per1Day { get; set; }
-
-        public double per2Days { get; set; }
-
-        public double per3Days { get; set; }
-
-        public double per4Days { get; set; }
-
-        public double per5Days { get; set; }
-
-        public double perExtraDay { get; set; }
-
-        public int bicycleType_Id { get; set; }
-        public BicycleType bicycleType { get; set; }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:46c1baf6e75444a9391175d23ce60af1922bd1cdf643321c349af405c8b21ae3
+size 636

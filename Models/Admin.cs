@@ -1,31 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.Models
-{
-    public class Admin
-    {
-        public int id { get; set; }
-
-        [Display(Name = "Logged In")]
-        public bool isCurrentlyLogged { get; set; }
-
-        [Display(Name = "Suspended")]
-        public bool isSuspended { get; set; }
-
-        [NotMapped]
-        public List<bool> rolesBool { get; set; }
-
-        public List<AdminRoles> roles { get; set; }
-
-        public int? user_id { get; set; }
-        public User user { get; set; }
-
-        public List<Transaction> transactions { get; set; }
-
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:de3679acfaea85d38cdd7914943aa13a31ac534bf5b70d67f1d4402fb0f2e29f
+size 583

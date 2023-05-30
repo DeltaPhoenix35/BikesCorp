@@ -1,23 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.Interfaces
-{
-    public interface IContractService<T> : IEntityService<T>
-    {
-        public List<T> GetAll(bool active, bool denied);
-
-        public List<T> GetAllByUsername(string username, bool active, bool denied);
-
-        public List<T> GetAllByCustomerId(int id, bool active, bool denied);
-
-        public T Cancel(T row);
-
-        public T Confirm(T row);
-
-        public T Deny(T row, string refusalInformation);
-
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:61ec990132942b8187ad389cfdea971348ef16ef4e279a7d127edaef9a9e85ec
+size 646

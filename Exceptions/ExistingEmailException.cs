@@ -1,23 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.Exceptions
-{
-    public class ExistingEmailException : InvalidOperationException
-    {
-        public ExistingEmailException()
-        {
-
-        }
-        public ExistingEmailException(string message) : base(message)
-        {
-
-        }
-        public ExistingEmailException(string message, Exception inner) : base(message, inner)
-        {
-
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:b52620ff819a7ad1e9b137ad2127b3faa0874f8ceb10f8223fa75e6319b316a7
+size 483

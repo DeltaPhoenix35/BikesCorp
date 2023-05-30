@@ -1,23 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.Exceptions
-{
-    public class SubscriptionPlanIsntActive : InvalidOperationException
-    {
-        public SubscriptionPlanIsntActive()
-        {
-
-        }
-        public SubscriptionPlanIsntActive(string message) : base(message)
-        {
-
-        }
-        public SubscriptionPlanIsntActive(string message, Exception inner) : base(message, inner)
-        {
-
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:bd5e1ce583d03d7e454cbcdce50ec072c4041a8b0f0753eef2114d6d61da3c85
+size 499

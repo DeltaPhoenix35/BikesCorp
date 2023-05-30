@@ -1,22 +1,3 @@
-﻿using BikesTest.Models;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.Interfaces
-{
-    public interface IEntityService<T>
-    {
-        T Create(T row);
-        T Update(T row);
-        void Delete(int id);
-        void Delete(T row);
-        T GetById(int? id);
-        List<T> GetAll();
-        List<T> Search();
-        T GetByUsername(string username);
-
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:85c60ac0d2019f8ff32d773e1604457d1d24dcfcae42fa8f8ccddd6de223cbbd
+size 442

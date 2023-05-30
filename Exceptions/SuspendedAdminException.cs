@@ -1,23 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.Exceptions
-{
-    public class SuspendedAdminException : InvalidOperationException
-    {
-        public SuspendedAdminException()
-        {
-
-        }
-        public SuspendedAdminException(string message) : base(message)
-        {
-
-        }
-        public SuspendedAdminException(string message, Exception inner) : base(message, inner)
-        {
-
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:489b064c26a4784286b4b308eef00f8a6458db7d0faf35b85904f4d848295d35
+size 487

@@ -1,13 +1,3 @@
-{
-  "runtimeOptions": {
-    "tfm": "net5.0",
-    "framework": {
-      "name": "Microsoft.AspNetCore.App",
-      "version": "5.0.0"
-    },
-    "configProperties": {
-      "System.GC.Server": true,
-      "System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization": false
-    }
-  }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:bd3af941b5cb37e4c46ce1a81dc448d5253966733bf8a7a47e338db00de440a0
+size 304

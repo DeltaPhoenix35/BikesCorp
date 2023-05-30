@@ -1,27 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.Models
-{
-    public class CouponType
-    {
-        [Display(Name = "Id")]
-        public int id { get; set; }
-
-        [Display(Name = "Coupon")]
-        public int value { get; set; }
-
-        [Display(Name = "Expiring Period (weeks)")]
-        public int weeksToExpire { get; set; }
-
-        [Display(Name = "Points To Redeem")]
-        public int pointsToRedeem { get; set; }
-
-        public bool isDeleted { get; set; } = false;
-
-        public List<Coupon> coupons { get; set; }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:c6a2cbf969a9ae6d0c21112d9485f5d8f61ad60c509f918705a2e69aa4af2aac
+size 658

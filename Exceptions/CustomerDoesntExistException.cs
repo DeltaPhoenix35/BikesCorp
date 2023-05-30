@@ -1,23 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.Exceptions
-{
-    public class CustomerDoesntExistException : InvalidOperationException
-    {
-        public CustomerDoesntExistException()
-        {
-
-        }
-        public CustomerDoesntExistException(string message) : base(message)
-        {
-
-        }
-        public CustomerDoesntExistException(string message, Exception inner) : base(message, inner)
-        {
-
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:1d70757b1688f05f9a4ea61686dda66f936034e85aeee2ff26adbc2674a18905
+size 507

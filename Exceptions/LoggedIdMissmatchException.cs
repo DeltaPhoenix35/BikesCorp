@@ -1,23 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.Exceptions
-{
-    public class LoggedIdMissmatchException : InvalidOperationException
-    {
-        public LoggedIdMissmatchException()
-        {
-
-        }
-        public LoggedIdMissmatchException(string message) : base(message)
-        {
-
-        }
-        public LoggedIdMissmatchException(string message, Exception inner) : base(message, inner)
-        {
-
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:0a0206872ef55d38ee2528ae1e61a6c57cc70777d1d089f842510d7390b4aefa
+size 499

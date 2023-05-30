@@ -1,19 +1,3 @@
-﻿using BikesTest.Exceptions;
-using BikesTest.Interfaces;
-using BikesTest.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.ServiceExtentions
-{
-    public static class AdminServiceExtensions
-    {
-        public static void CheckSuspended(this IUserService<Admin> aService, int id)
-        {
-            if (aService.GetByUserId(id).isSuspended)
-                throw new SuspendedAdminException("This admin is currently suspended and cannot perform this operation");
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:d82e8eaa0e08f8efe5b4f08e0f0cf302540c4bf9efd93ad516eb7ffc255ad51e
+size 283

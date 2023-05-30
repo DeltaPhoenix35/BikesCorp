@@ -1,36 +1,3 @@
-﻿using BikesTest.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.configs
-{
-    public class PricingSchemeConfiguration : IEntityTypeConfiguration<PricingScheme>
-    {
-        public void Configure(EntityTypeBuilder<PricingScheme> builder)
-        {
-            builder.HasKey(o => o.id);
-
-            //builder.HasOne(o => o.bicycleType)
-            //       .WithOne(t => t.pricing)
-            //       .HasForeignKey<PricingScheme>(t => t.bicycleType_Id)
-            //       .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasData(new PricingScheme
-            {
-                id = 1,
-                perHour = 25,
-                per1Day = 125,
-                per2Days = 225,
-                per3Days = 325,
-                per4Days = 425,
-                per5Days = 525,
-                perExtraDay = 125,
-                bicycleType_Id = 1
-            }) ;
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:80abfb39d6d8162a5457a4e70751e193e5bf06b9c5fffbdbda16eeb0d02bceec
+size 1065

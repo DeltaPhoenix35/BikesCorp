@@ -1,28 +1,3 @@
-﻿using BikesTest.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BikesTest.configs
-{
-    public class CouponConfiguration : IEntityTypeConfiguration<Coupon>
-    {
-        public void Configure(EntityTypeBuilder<Coupon> builder)
-        {
-            builder.HasKey(o => o.id);
-
-            builder.HasOne(o => o.customer)
-                   .WithMany(t => t.coupons)
-                   .HasForeignKey(o => o.customer_Id)
-                   .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasOne(o => o.couponType)
-                   .WithMany(t => t.coupons)
-                   .HasForeignKey(o => o.couponType_Id)
-                   .OnDelete(DeleteBehavior.Cascade);
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:70da2de5d7facee1de6777a4f101ba9271445b1dd31c0bab551fc604f16287b6
+size 857
