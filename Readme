@@ -1,0 +1,39 @@
+This project is a Master's final year submission at the Institute of Electrical and Electronic Engeneering, Boumerdes, Algeria.
+
+This readme file describes the steps to take in order to run the application on your own machine
+          _____                    _____                    _____                    _____                            _____                    _____          
+         /\    \                  /\    \                  /\    \                  /\    \                          /\    \                  /\    \         
+        /::\    \                /::\    \                /::\    \                /::\    \                        /::\____\                /::\    \        
+       /::::\    \              /::::\    \              /::::\    \              /::::\    \                      /::::|   |               /::::\    \       
+      /::::::\    \            /::::::\    \            /::::::\    \            /::::::\    \                    /:::::|   |              /::::::\    \      
+     /:::/\:::\    \          /:::/\:::\    \          /:::/\:::\    \          /:::/\:::\    \                  /::::::|   |             /:::/\:::\    \     
+    /:::/__\:::\    \        /:::/__\:::\    \        /:::/__\:::\    \        /:::/  \:::\    \                /:::/|::|   |            /:::/__\:::\    \    
+   /::::\   \:::\    \      /::::\   \:::\    \      /::::\   \:::\    \      /:::/    \:::\    \              /:::/ |::|   |           /::::\   \:::\    \   
+  /::::::\   \:::\    \    /::::::\   \:::\    \    /::::::\   \:::\    \    /:::/    / \:::\    \            /:::/  |::|___|______    /::::::\   \:::\    \  
+ /:::/\:::\   \:::\____\  /:::/\:::\   \:::\    \  /:::/\:::\   \:::\    \  /:::/    /   \:::\ ___\          /:::/   |::::::::\    \  /:::/\:::\   \:::\    \ 
+/:::/  \:::\   \:::|    |/:::/__\:::\   \:::\____\/:::/  \:::\   \:::\____\/:::/____/     \:::|    |        /:::/    |:::::::::\____\/:::/__\:::\   \:::\____\
+\::/   |::::\  /:::|____|\:::\   \:::\   \::/    /\::/    \:::\  /:::/    /\:::\    \     /:::|____|        \::/    / ~~~~~/:::/    /\:::\   \:::\   \::/    /
+ \/____|:::::\/:::/    /  \:::\   \:::\   \/____/  \/____/ \:::\/:::/    /  \:::\    \   /:::/    /          \/____/      /:::/    /  \:::\   \:::\   \/____/ 
+       |:::::::::/    /    \:::\   \:::\    \               \::::::/    /    \:::\    \ /:::/    /                       /:::/    /    \:::\   \:::\    \     
+       |::|\::::/    /      \:::\   \:::\____\               \::::/    /      \:::\    /:::/    /                       /:::/    /      \:::\   \:::\____\    
+       |::| \::/____/        \:::\   \::/    /               /:::/    /        \:::\  /:::/    /                       /:::/    /        \:::\   \::/    /    
+       |::|  ~|               \:::\   \/____/               /:::/    /          \:::\/:::/    /                       /:::/    /          \:::\   \/____/     
+       |::|   |                \:::\    \                  /:::/    /            \::::::/    /                       /:::/    /            \:::\    \         
+       \::|   |                 \:::\____\                /:::/    /              \::::/    /                       /:::/    /              \:::\____\        
+        \:|   |                  \::/    /                \::/    /                \::/____/                        \::/    /                \::/    /        
+         \|___|                   \/____/                  \/____/                  ~~                               \/____/                  \/____/         
+                                                                                                                                                              
+To run the applicaiton as is, Visual Studio 2019 (or more) is needed.
+1-Make sure that the migrations folder is completely empty.
+
+2-Create a new SQL Server database on your machine and hold on to its name.
+
+3-In the appsettings.json file, ConnectionStrings -> DefaultConnection -> Catalog=database_name;
+
+4-Using the integrated Package Manager Consol provided by VS, execute the following commands 
+  ->add-migration example-name
+  ->update-databse
+  
+5-Build the application "ctrl+B" or clicking the "generate solution" button.
+
+6-Run the application "ctrl+F5" or set the execution mode to Realse and click the start button. 
